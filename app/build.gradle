@@ -10,9 +10,45 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
-    buildTypes {
+
+    signingConfigs {
+        //debug版签名配置
+        debug {
+            storeFile file(SIGN_STORE_FILE)
+            storePassword SIGN_STORE_PWD
+            keyAlias SIGN_KEY_ALIAS
+            keyPassword SIGH_KEY_PWD
+        }
+
+        //发布版签名配置
         release {
+            //密钥文件路径
+            storeFile file(SIGN_STORE_FILE)
+            //密钥文件密码
+            storePassword SIGN_STORE_PWD
+            //key别名
+            keyAlias SIGN_KEY_ALIAS
+            //key密码
+            keyPassword SIGH_KEY_PWD
+        }
+    }
+
+    buildTypes {
+        debug {
+            multiDexEnabled true
             minifyEnabled false
+            zipAlignEnabled true
+            shrinkResources false
+            signingConfig signingConfigs.debug
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        release {
+            multiDexEnabled true
+            minifyEnabled true
+            zipAlignEnabled true
+            shrinkResources true
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }

@@ -49,7 +49,7 @@
                 android:layout_width="@dimen/dp_130"
                 android:layout_height="@dimen/dp_38"
                 android:text="@string/now_experience"
-                android:background="@drawable/btn_splash_bg"
+                android:background="@drawable/btn_splash_next"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="@dimen/dp_40"
@@ -60,5 +60,19 @@
         </RelativeLayout>
 
     </ViewFlipper>
+
+    <TextView
+        android:id="@+id/tv_jump"
+        android:layout_width="@dimen/dp_49"
+        android:layout_height="@dimen/dp_22"
+        android:text="@string/jump"
+        android:background="@drawable/btn_splash_jump"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/dp_18"
+        android:layout_marginTop="@dimen/dp_27"
+        android:textColor="@color/color_FFFFFF"
+        android:textSize="@dimen/sp_13"
+        android:gravity="center"
+        android:visibility="gone"/>
 
 </RelativeLayout>

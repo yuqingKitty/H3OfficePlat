@@ -1,6 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_FBFBFB"
+    android:orientation="vertical">
 
-</android.support.constraint.ConstraintLayout>
+    <com.aotuo.h3officeplat.view.TitleView
+        android:id="@+id/title_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:centerTitle="@string/more_language"
+        app:rightTitle="@string/finish" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_FFFFFF"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/rl_language_chinese"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_45"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/dp_12">
+
+            <TextView
+                android:id="@+id/tv_language_chinese"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="@string/language_chinese"
+                android:textColor="@color/color_2C3038"
+                android:textSize="@dimen/sp_16" />
+            <ImageView
+                android:id="@+id/iv_chinese_selected"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dp_17"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/icon_selected"
+                android:visibility="gone"/>
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1"
+            android:layout_marginLeft="@dimen/dp_11"
+            android:background="@color/color_EDEDED"/>
+
+        <RelativeLayout
+            android:id="@+id/rl_language_english"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_45"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/dp_12">
+
+            <TextView
+                android:id="@+id/tv_language_english"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="@string/language_english"
+                android:textColor="@color/color_2C3038"
+                android:textSize="@dimen/sp_16" />
+            <ImageView
+                android:id="@+id/iv_english_selected"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dp_17"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/icon_selected"
+                android:visibility="gone"/>
+        </RelativeLayout>
+    </LinearLayout>
+
+</LinearLayout>

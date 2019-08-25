@@ -16,4 +16,7 @@
     <string name="current_version">当前版本</string>
     <string name="language_chinese">中文</string>
     <string name="language_english">英文</string>
+
+    <string name="edit">编辑</string>
+    <string name="save">保存</string>
 </resources>

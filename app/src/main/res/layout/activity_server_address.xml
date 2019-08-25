@@ -1,6 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_FBFBFB"
+    android:orientation="vertical">
 
-</android.support.constraint.ConstraintLayout>
+    <com.aotuo.h3officeplat.view.TitleView
+        android:id="@+id/title_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:centerTitle="@string/server_address"
+        app:rightTitle="@string/edit" />
+
+    <TextView
+        android:id="@+id/tv_saved_serve_address"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_48"
+        android:background="@color/color_FFFFFF"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/dp_12"
+        android:text="http://121.40.136.138:8010/Portal/m.asmx"
+        android:textColor="@color/color_2C3038"
+        android:textSize="@dimen/sp_16"
+        android:singleLine="true"
+        android:ellipsize="end"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tv_check_next"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_44"
+            android:background="@color/color_77BCFA"
+            android:layout_alignParentBottom="true"
+            android:gravity="center"
+            android:text="@string/check"
+            android:textColor="@color/color_FFFFFF"
+            android:textSize="@dimen/sp_17" />
+
+    </RelativeLayout>
+
+
+</LinearLayout>

@@ -2,4 +2,18 @@
     <string name="app_name">H3OfficePlat</string>
     <string name="jump">跳过</string>
     <string name="now_experience">立即体验</string>
+
+    <string name="config_server_address">服务器地址</string>
+    <string name="check">检测</string>
+    <string name="next">下一步</string>
+    <string name="please_config_server_address">请配置服务器地址!</string>
+    <string name="save_server_address_tip">保存后可在设置中修改</string>
+    <string name="input_server_address">请填写服务器地址</string>
+
+    <string name="system_setting">系统设置</string>
+    <string name="server_address">服务地址</string>
+    <string name="more_language">多语言</string>
+    <string name="current_version">当前版本</string>
+    <string name="language_chinese">中文</string>
+    <string name="language_english">英文</string>
 </resources>

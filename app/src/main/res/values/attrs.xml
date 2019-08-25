@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--自定义标题栏属性-->
+    <declare-styleable name="AppTitle">
+        <attr name="centerTitle" format="reference|string" />
+        <attr name="rightTitle" format="reference|string" />
+    </declare-styleable>
+
+</resources>

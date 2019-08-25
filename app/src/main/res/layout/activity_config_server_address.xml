@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_FBFBFB"
+    android:orientation="vertical">
+
+    <com.aotuo.h3officeplat.view.TitleView
+        android:id="@+id/title_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:centerTitle="@string/config_server_address"
+        app:rightTitle="@string/check" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_92"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/please_config_server_address"
+            android:textColor="@color/color_2C3038"
+            android:textSize="@dimen/sp_17" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/save_server_address_tip"
+            android:textColor="@color/color_4E5259"
+            android:textSize="@dimen/sp_13" />
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/et_input_server"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_45"
+        android:background="@drawable/edit_config_server_bg"
+        android:layout_marginLeft="@dimen/dp_21"
+        android:layout_marginRight="@dimen/dp_21"
+        android:layout_marginTop="@dimen/dp_16"
+        android:hint="@string/input_server_address"
+        android:textColorHint="@color/color_B8B8B8"
+        android:textColor="@color/color_2C3038"
+        android:textSize="@dimen/sp_14"
+        android:paddingLeft="@dimen/dp_26"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tv_config_next"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_44"
+            android:background="@color/color_77BCFA"
+            android:layout_alignParentBottom="true"
+            android:gravity="center"
+            android:text="@string/next"
+            android:textColor="@color/color_FFFFFF"
+            android:textSize="@dimen/sp_17" />
+
+    </RelativeLayout>
+
+</LinearLayout>

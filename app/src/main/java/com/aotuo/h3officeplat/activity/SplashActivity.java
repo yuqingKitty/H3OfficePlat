@@ -135,7 +135,7 @@ public class SplashActivity extends BaseActivity implements GestureDetector.OnGe
             case R.id.tv_jump:
             case R.id.tv_next:
                 // 跳转到服务器配置地址
-                changeView(MainActivity.class);
+                changeView(ConfigServerAddressActivity.class);
                 finish();
                 break;
         }
@@ -143,7 +143,7 @@ public class SplashActivity extends BaseActivity implements GestureDetector.OnGe
 
     private void todoNext() {
         // 跳转至登录页面
-        changeView(MainActivity.class);
+        changeView(SettingActivity.class);
         finish();
     }
 

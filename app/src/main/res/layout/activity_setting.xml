@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_FBFBFB"
+    android:orientation="vertical">
+
+    <com.aotuo.h3officeplat.view.TitleView
+        android:id="@+id/title_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:centerTitle="@string/system_setting" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_FFFFFF"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_45"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/dp_12">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/server_address"
+                android:textColor="@color/color_2C3038"
+                android:textSize="@dimen/sp_16" />
+
+            <TextView
+                android:id="@+id/tv_serve_address"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/dp_60"
+                android:drawableRight="@drawable/icon_arrow_right"
+                android:drawablePadding="@dimen/dp_3"
+                android:ellipsize="end"
+                android:gravity="center_vertical|right"
+                android:paddingRight="@dimen/dp_20"
+                android:singleLine="true"
+                android:text="http://121.40.136.138:80"
+                android:textColor="@color/color_8B939F"
+                android:textSize="@dimen/sp_16" />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1"
+            android:layout_marginLeft="@dimen/dp_11"
+            android:background="@color/color_EDEDED"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_45"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/dp_12">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/more_language"
+                android:textColor="@color/color_2C3038"
+                android:textSize="@dimen/sp_16" />
+
+            <TextView
+                android:id="@+id/tv_current_language"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:drawableRight="@drawable/icon_arrow_right"
+                android:drawablePadding="@dimen/dp_3"
+                android:gravity="center_vertical|right"
+                android:paddingRight="@dimen/dp_20"
+                android:text="@string/language_chinese"
+                android:textColor="@color/color_8B939F"
+                android:textSize="@dimen/sp_16" />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1"
+            android:layout_marginLeft="@dimen/dp_11"
+            android:background="@color/color_EDEDED"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_45"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/dp_12"
+            android:paddingRight="@dimen/dp_20">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/current_version"
+                android:textColor="@color/color_2C3038"
+                android:textSize="@dimen/sp_16" />
+
+            <TextView
+                android:id="@+id/tv_current_version"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:gravity="right"
+                android:singleLine="true"
+                android:textColor="@color/color_8B939F"
+                android:textSize="@dimen/sp_16" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

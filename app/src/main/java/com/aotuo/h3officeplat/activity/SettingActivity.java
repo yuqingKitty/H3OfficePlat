@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.aotuo.h3officeplat.R;
+import com.aotuo.h3officeplat.utils.SharedPreferencesHelper;
 import com.aotuo.h3officeplat.view.TitleView;
 
 import butterknife.BindView;
@@ -28,10 +29,16 @@ public class SettingActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-
         tv_current_version.setText(getVersionName());
+    }
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        String serverAddress = SharedPreferencesHelper.getInstance().getAppData(SharedPreferencesHelper.KEY_APP_SERVER_ADDRESS, "");
+        tv_serve_address.setText(serverAddress);
+        String language = SharedPreferencesHelper.getInstance().getAppData(SharedPreferencesHelper.KEY_APP_USE_LANGUAGE, getString(R.string.language_chinese));
+        tv_current_language.setText(language);
     }
 
     private String getVersionName(){

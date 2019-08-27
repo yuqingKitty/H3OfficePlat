@@ -43,7 +43,6 @@
                 android:gravity="center_vertical|right"
                 android:paddingRight="@dimen/dp_20"
                 android:singleLine="true"
-                android:text="http://121.40.136.138:80"
                 android:textColor="@color/color_8B939F"
                 android:textSize="@dimen/sp_16" />
         </LinearLayout>
@@ -76,7 +75,6 @@
                 android:drawablePadding="@dimen/dp_3"
                 android:gravity="center_vertical|right"
                 android:paddingRight="@dimen/dp_20"
-                android:text="@string/language_chinese"
                 android:textColor="@color/color_8B939F"
                 android:textSize="@dimen/sp_16" />
         </LinearLayout>

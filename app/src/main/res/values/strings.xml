@@ -9,6 +9,9 @@
     <string name="please_config_server_address">请配置服务器地址!</string>
     <string name="save_server_address_tip">保存后可在设置中修改</string>
     <string name="input_server_address">请填写服务器地址</string>
+    <string name="server_address_is_empty">服务地址不能为空</string>
+    <string name="server_address_format_error">服务地址格式不正确</string>
+    <string name="know_it">知道了</string>
 
     <string name="system_setting">系统设置</string>
     <string name="server_address">服务地址</string>

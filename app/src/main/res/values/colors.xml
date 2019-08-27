@@ -6,13 +6,16 @@
 
 
     <color name="color_FFFFFF">#FFFFFF</color>
+    <color name="color_000000">#000000</color>
     <color name="color_FBFBFB">#FBFBFB</color>
     <color name="color_38ADFF">#38ADFF</color>
     <color name="color_2C3038">#2C3038</color>
     <color name="color_D3D8DC">#D3D8DC</color>
     <color name="color_4E5259">#4E5259</color>
     <color name="color_77BCFA">#77BCFA</color>
+    <color name="color_B6B6B6">#B6B6B6</color>
     <color name="color_B8B8B8">#B8B8B8</color>
     <color name="color_8B939F">#8B939F</color>
     <color name="color_EDEDED">#EDEDED</color>
+    <color name="color_E6FFFFFF">#E6FFFFFF</color>
 </resources>

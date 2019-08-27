@@ -14,6 +14,8 @@ public class SharedPreferencesHelper {
     static final String XML_APP_DATA = "H3_app_data";
 
     public static final String KEY_APP_FIRST_USE = "FirstUse";
+    public static final String KEY_APP_SERVER_ADDRESS = "ServerAddress";
+    public static final String KEY_APP_USE_LANGUAGE = "useLanguage";
 
     HashMap<String, SharedPreferences> sharedPreferencesHashMap;
 

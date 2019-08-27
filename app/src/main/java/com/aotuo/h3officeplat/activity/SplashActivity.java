@@ -143,7 +143,8 @@ public class SplashActivity extends BaseActivity implements GestureDetector.OnGe
 
     private void todoNext() {
         // 跳转至登录页面
-        changeView(SettingActivity.class);
+        changeView(ConfigServerAddressActivity.class);
+//        changeView(SettingActivity.class);
         finish();
     }
 

@@ -20,7 +20,6 @@
         android:background="@color/color_FFFFFF"
         android:gravity="center_vertical"
         android:paddingLeft="@dimen/dp_12"
-        android:text="http://121.40.136.138:8010/Portal/m.asmx"
         android:textColor="@color/color_2C3038"
         android:textSize="@dimen/sp_16"
         android:singleLine="true"

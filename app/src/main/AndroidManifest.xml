@@ -35,6 +35,7 @@
         <activity android:name=".activity.ServerAddressActivity"/>
         <activity android:name=".activity.EditServerAddressActivity"/>
         <activity android:name=".activity.MoreLanguageActivity"/>
+        <activity android:name=".activity.WebViewActivity"/>
 
 
 

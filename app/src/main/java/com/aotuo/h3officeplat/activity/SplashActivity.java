@@ -1,5 +1,6 @@
 package com.aotuo.h3officeplat.activity;
 
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.GestureDetector;
@@ -143,7 +144,9 @@ public class SplashActivity extends BaseActivity implements GestureDetector.OnGe
 
     private void todoNext() {
         // 跳转至登录页面
-        changeView(ConfigServerAddressActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString(WebViewActivity.URL_KEY, "http://th.d2jie.cn/RRbYje");
+        changeView(WebViewActivity.class, bundle);
 //        changeView(SettingActivity.class);
         finish();
     }

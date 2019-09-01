@@ -1,15 +1,22 @@
 package com.aotuo.h3officeplat.activity;
 
+import android.content.Intent;
+import android.os.Build;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.aotuo.h3officeplat.R;
+import com.aotuo.h3officeplat.utils.LanguageUtil;
 import com.aotuo.h3officeplat.utils.SharedPreferencesHelper;
 import com.aotuo.h3officeplat.view.TitleView;
 
 import butterknife.BindView;
+
+import static com.aotuo.h3officeplat.utils.SharedPreferencesHelper.KEY_APP_USE_LANGUAGE;
+import static com.aotuo.h3officeplat.utils.SharedPreferencesHelper.KEY_APP_USE_LANGUAGE_EN;
+import static com.aotuo.h3officeplat.utils.SharedPreferencesHelper.KEY_APP_USE_LANGUAGE_ZH;
 
 public class MoreLanguageActivity extends BaseActivity implements View.OnClickListener {
     @BindView(R.id.title_view)
@@ -37,8 +44,8 @@ public class MoreLanguageActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     protected void initView() {
-        String language = SharedPreferencesHelper.getInstance().getAppData(SharedPreferencesHelper.KEY_APP_USE_LANGUAGE, getString(R.string.language_chinese));
-        if (language.equals(getString(R.string.language_chinese))) {
+        String language = SharedPreferencesHelper.getInstance().getAppData(KEY_APP_USE_LANGUAGE, KEY_APP_USE_LANGUAGE_ZH);
+        if (language.equals(KEY_APP_USE_LANGUAGE_ZH)) {
             selectedPosition = 0;
         } else {
             selectedPosition = 1;
@@ -60,9 +67,9 @@ public class MoreLanguageActivity extends BaseActivity implements View.OnClickLi
             case R.id.tv_right_title:
                 // 完成
                 if (selectedPosition == 0) {
-                    SharedPreferencesHelper.getInstance().setAppData(SharedPreferencesHelper.KEY_APP_USE_LANGUAGE, getString(R.string.language_chinese));
+                    SharedPreferencesHelper.getInstance().setAppData(KEY_APP_USE_LANGUAGE, KEY_APP_USE_LANGUAGE_ZH);
                 } else {
-                    SharedPreferencesHelper.getInstance().setAppData(SharedPreferencesHelper.KEY_APP_USE_LANGUAGE, getString(R.string.language_english));
+                    SharedPreferencesHelper.getInstance().setAppData(KEY_APP_USE_LANGUAGE, KEY_APP_USE_LANGUAGE_EN);
                 }
                 finish();
                 break;
@@ -88,6 +95,18 @@ public class MoreLanguageActivity extends BaseActivity implements View.OnClickLi
             iv_english_selected.setVisibility(View.VISIBLE);
             tv_language_chinese.setTextColor(getResources().getColor(R.color.color_2C3038));
             iv_chinese_selected.setVisibility(View.GONE);
+        }
+    }
+
+
+    /**
+     * 如果是7.0以下，我们需要调用changeAppLanguage方法，
+     * 如果是7.0及以上系统，直接把我们想要切换的语言类型保存在SharedPreferences中,然后重新启动MainActivity即可
+     */
+    private void changeLanguage() {
+        String language = SharedPreferencesHelper.getInstance().getAppData(KEY_APP_USE_LANGUAGE, KEY_APP_USE_LANGUAGE_ZH);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+            LanguageUtil.changeAppLanguage(this, language);
         }
     }
 

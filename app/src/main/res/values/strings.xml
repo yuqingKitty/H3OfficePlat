@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">H3OfficePlat</string>
+    <string name="app_name">H3办公平台</string>
     <string name="jump">跳过</string>
     <string name="now_experience">立即体验</string>
 
@@ -12,7 +12,6 @@
     <string name="server_address_is_empty">服务地址不能为空</string>
     <string name="server_address_format_error">服务地址格式不正确</string>
     <string name="know_it">知道了</string>
-    <string name="please_input">请输入</string>
 
     <string name="system_setting">系统设置</string>
     <string name="server_address">服务地址</string>

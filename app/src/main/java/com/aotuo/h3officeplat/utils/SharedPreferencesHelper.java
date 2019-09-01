@@ -16,6 +16,8 @@ public class SharedPreferencesHelper {
     public static final String KEY_APP_FIRST_USE = "FirstUse";
     public static final String KEY_APP_SERVER_ADDRESS = "ServerAddress";
     public static final String KEY_APP_USE_LANGUAGE = "useLanguage";
+    public static final String KEY_APP_USE_LANGUAGE_ZH = "ZH";
+    public static final String KEY_APP_USE_LANGUAGE_EN = "EN";
 
     HashMap<String, SharedPreferences> sharedPreferencesHashMap;
 

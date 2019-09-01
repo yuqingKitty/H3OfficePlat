@@ -43,8 +43,6 @@
                 android:gravity="center_vertical|right"
                 android:paddingRight="@dimen/dp_20"
                 android:singleLine="true"
-                android:hint="@string/please_input"
-                android:textColorHint="@color/color_D3D8DC"
                 android:textColor="@color/color_8B939F"
                 android:textSize="@dimen/sp_16" />
         </LinearLayout>

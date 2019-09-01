@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">H3办公平台</string>
+    <string name="jump">跳过</string>
+    <string name="now_experience">立即体验</string>
+
+    <string name="config_server_address">Server Address</string>
+    <string name="check">Check</string>
+    <string name="next">Next</string>
+    <string name="please_config_server_address">Please configure the server address!</string>
+    <string name="save_server_address_tip">It can be modified in settings after saving</string>
+    <string name="input_server_address">Please fill in the server address</string>
+    <string name="server_address_is_empty">Service address cannot be empty</string>
+    <string name="server_address_format_error">Service address format is incorrect</string>
+    <string name="know_it">I know</string>
+
+    <string name="system_setting">System Settings</string>
+    <string name="server_address">Service Address</string>
+    <string name="more_language">Language</string>
+    <string name="current_version">Current Version</string>
+    <string name="language_chinese">Chinese</string>
+    <string name="language_english">English</string>
+
+    <string name="edit">Edit</string>
+    <string name="save">Save</string>
+    <string name="finish">Finished</string>
+</resources>

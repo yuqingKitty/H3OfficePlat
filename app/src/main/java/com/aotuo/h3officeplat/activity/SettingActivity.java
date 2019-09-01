@@ -12,6 +12,9 @@ import com.aotuo.h3officeplat.view.TitleView;
 import butterknife.BindView;
 import butterknife.OnClick;
 
+import static com.aotuo.h3officeplat.utils.SharedPreferencesHelper.KEY_APP_USE_LANGUAGE;
+import static com.aotuo.h3officeplat.utils.SharedPreferencesHelper.KEY_APP_USE_LANGUAGE_ZH;
+
 public class SettingActivity extends BaseActivity {
     @BindView(R.id.title_view)
     TitleView title_view;
@@ -37,7 +40,7 @@ public class SettingActivity extends BaseActivity {
         super.onResume();
         String serverAddress = SharedPreferencesHelper.getInstance().getAppData(SharedPreferencesHelper.KEY_APP_SERVER_ADDRESS, "");
         tv_serve_address.setText(serverAddress);
-        String language = SharedPreferencesHelper.getInstance().getAppData(SharedPreferencesHelper.KEY_APP_USE_LANGUAGE, getString(R.string.language_chinese));
+        String language = SharedPreferencesHelper.getInstance().getAppData(KEY_APP_USE_LANGUAGE, KEY_APP_USE_LANGUAGE_ZH);
         tv_current_language.setText(language);
     }
 

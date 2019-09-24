@@ -2,6 +2,7 @@ package com.aotuo.h3officeplat.activity;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -42,9 +43,11 @@ public class ConfigServerAddressActivity extends BaseActivity implements View.On
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.iv_back:
+            case R.id.tv_config_next:
                 // 跳转到登录页面
-                changeView(SettingActivity.class);
-                finish();
+                Bundle bundle = new Bundle();
+                bundle.putString(WebViewActivity.URL_KEY, WebViewActivity.URL_H5_LOGIN);
+                changeView(WebViewActivity.class, bundle);
                 break;
             case R.id.tv_right_title:
                 // 检测
@@ -60,17 +63,15 @@ public class ConfigServerAddressActivity extends BaseActivity implements View.On
                     showToast(getString(R.string.server_address_format_error));
                 }
                 break;
-            case R.id.tv_config_next:
-                // 跳转到登录页面
-
-                break;
         }
     }
 
     @Override
     public void onBackPressed() {
         //点击返回按钮，跳转到登录页面
-
+        Bundle bundle = new Bundle();
+        bundle.putString(WebViewActivity.URL_KEY, WebViewActivity.URL_H5_LOGIN);
+        changeView(WebViewActivity.class, bundle);
     }
 
 }

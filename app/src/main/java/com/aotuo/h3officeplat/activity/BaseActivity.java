@@ -1,34 +1,14 @@
 package com.aotuo.h3officeplat.activity;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.widget.Toast;
 
-import com.aotuo.h3officeplat.R;
-import com.aotuo.h3officeplat.utils.LanguageUtil;
-import com.aotuo.h3officeplat.utils.SharedPreferencesHelper;
-
 import butterknife.ButterKnife;
 
-import static com.aotuo.h3officeplat.utils.SharedPreferencesHelper.KEY_APP_USE_LANGUAGE;
-import static com.aotuo.h3officeplat.utils.SharedPreferencesHelper.KEY_APP_USE_LANGUAGE_ZH;
-
 public abstract class BaseActivity extends Activity {
-
-    /**
-     * 此方法先于 onCreate()方法执行
-     * @param newBase
-     */
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        //获取我们存储的语言环境 比如 "en","zh",等等
-        String language = SharedPreferencesHelper.getInstance().getAppData(KEY_APP_USE_LANGUAGE, KEY_APP_USE_LANGUAGE_ZH);
-        //attach 对应语言环境下的context
-        super.attachBaseContext(LanguageUtil.attachBaseContext(newBase, language));
-    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

@@ -3,12 +3,14 @@ package com.aotuo.h3officeplat.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import android.view.View;
 import android.webkit.DownloadListener;
 import android.webkit.JavascriptInterface;
 import android.webkit.SslErrorHandler;
@@ -16,9 +18,10 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import com.aotuo.h3officeplat.R;
-import com.aotuo.h3officeplat.view.TitleView;
 
 import org.json.JSONObject;
 
@@ -26,12 +29,18 @@ import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class WebViewActivity extends BaseActivity {
     public static final String URL_KEY = "url";
+    public static final String URL_H5_LOGIN = "http://xyz.h3bpm.com:8085/Portal/Mobile/#/login";
 
     @BindView(R.id.webview)
     WebView mWebView;
+    @BindView(R.id.progressBar)
+    ProgressBar progressBar;
+    @BindView(R.id.iv_setting)
+    ImageView iv_setting;
 
     private String loadUrl;
     private Handler mHandler;
@@ -59,6 +68,7 @@ public class WebViewActivity extends BaseActivity {
         mWebView.getSettings().setTextZoom(100);
         mWebView.getSettings().setDefaultTextEncodingName("UTF-8");
         mWebView.getSettings().setJavaScriptEnabled(true);
+        mWebView.getSettings().setUserAgentString(mWebView.getSettings().getUserAgentString() + " " + "h3officeplat");
         mWebView.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
         // 设置可以使用localStorage
         mWebView.getSettings().setDomStorageEnabled(true);
@@ -84,6 +94,12 @@ public class WebViewActivity extends BaseActivity {
             public void onReceivedTitle(WebView view, String title) {
                 super.onReceivedTitle(view, title);
             }
+
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                progressBar.setProgress(newProgress);
+                super.onProgressChanged(view, newProgress);
+            }
         });
         mWebView.setWebViewClient(new WebViewClient() {
             @Override
@@ -105,9 +121,15 @@ public class WebViewActivity extends BaseActivity {
             }
 
             @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                super.onPageStarted(view, url, favicon);
+                progressBar.setVisibility(View.VISIBLE);
+            }
+
+            @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
-
+                progressBar.setVisibility(View.GONE);
             }
 
             /**
@@ -201,6 +223,15 @@ public class WebViewActivity extends BaseActivity {
             Uri uri = Uri.parse(url);
             Intent intent = new Intent(Intent.ACTION_VIEW, uri);
             context.startActivity(intent);
+        }
+    }
+
+    @OnClick({R.id.iv_setting})
+    void click(View view) {
+        switch (view.getId()) {
+            case R.id.iv_setting:
+                changeView(SettingActivity.class);
+                break;
         }
     }
 

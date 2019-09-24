@@ -1,5 +1,7 @@
 package com.aotuo.h3officeplat.activity;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -60,9 +62,14 @@ public class EditServerAddressActivity extends BaseActivity implements View.OnCl
                 String serverAddress = et_serve_address.getText().toString();
                 if (TextUtils.isEmpty(serverAddress)){
                     new CommonDialog(this);
-                } else {
+                } else if (serverAddress.startsWith("http:") || serverAddress.startsWith("https:")){
+                    Uri uri = Uri.parse(serverAddress);
+                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                    startActivity(intent);
                     SharedPreferencesHelper.getInstance().setAppData(SharedPreferencesHelper.KEY_APP_SERVER_ADDRESS, serverAddress);
                     finish();
+                } else {
+                    showToast(getString(R.string.server_address_format_error));
                 }
                 break;
             case R.id.iv_delete_server:

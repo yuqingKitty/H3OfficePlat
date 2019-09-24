@@ -145,9 +145,8 @@ public class SplashActivity extends BaseActivity implements GestureDetector.OnGe
     private void todoNext() {
         // 跳转至登录页面
         Bundle bundle = new Bundle();
-        bundle.putString(WebViewActivity.URL_KEY, "http://th.d2jie.cn/RRbYje");
+        bundle.putString(WebViewActivity.URL_KEY, WebViewActivity.URL_H5_LOGIN);
         changeView(WebViewActivity.class, bundle);
-//        changeView(SettingActivity.class);
         finish();
     }
 

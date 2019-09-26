@@ -64,6 +64,7 @@ public class WebViewActivity extends BaseActivity {
     }
 
     private void initWebView() {
+        mWebView.setWebContentsDebuggingEnabled(true);
         mWebView.getSettings().setDefaultFontSize(16);
         mWebView.getSettings().setTextZoom(100);
         mWebView.getSettings().setDefaultTextEncodingName("UTF-8");

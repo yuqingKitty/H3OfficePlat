@@ -1,8 +1,8 @@
 package com.aotuo.h3officeplat.activity;
 
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -105,7 +105,7 @@ public class SplashActivity extends BaseActivity implements GestureDetector.OnGe
                 vf_welcome.setOutAnimation(leftOutAnimation);
                 vf_welcome.showNext();//向右滑动
 
-                if (vf_welcome.getDisplayedChild() == vf_welcome.getChildCount() - 1){
+                if (vf_welcome.getDisplayedChild() == vf_welcome.getChildCount() - 1) {
                     tv_jump.setVisibility(View.GONE);
                 } else {
                     tv_jump.setVisibility(View.VISIBLE);
@@ -143,10 +143,13 @@ public class SplashActivity extends BaseActivity implements GestureDetector.OnGe
     }
 
     private void todoNext() {
-        // 跳转至登录页面
-        Bundle bundle = new Bundle();
-        bundle.putString(WebViewActivity.URL_KEY, WebViewActivity.URL_H5_LOGIN);
-        changeView(WebViewActivity.class, bundle);
+        String serverAddress = SharedPreferencesHelper.getInstance().getAppData(SharedPreferencesHelper.KEY_APP_SERVER_ADDRESS, "");
+        if (TextUtils.isEmpty(serverAddress)) {
+            // 跳转到服务器配置地址
+            changeView(ConfigServerAddressActivity.class);
+        } else {
+            changeView(WebViewActivity.class);
+        }
         finish();
     }
 

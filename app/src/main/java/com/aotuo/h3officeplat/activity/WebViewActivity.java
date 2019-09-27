@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.net.http.SslError;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
@@ -22,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.aotuo.h3officeplat.R;
+import com.aotuo.h3officeplat.utils.SharedPreferencesHelper;
 
 import org.json.JSONObject;
 
@@ -32,9 +32,6 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 public class WebViewActivity extends BaseActivity {
-    public static final String URL_KEY = "url";
-    public static final String URL_H5_LOGIN = "http://xyz.h3bpm.com:8085/Portal/Mobile/#/login";
-
     @BindView(R.id.webview)
     WebView mWebView;
     @BindView(R.id.progressBar)
@@ -42,7 +39,6 @@ public class WebViewActivity extends BaseActivity {
     @BindView(R.id.iv_setting)
     ImageView iv_setting;
 
-    private String loadUrl;
     private Handler mHandler;
     private Map<String, String> mCallBackCacheMap;  // JS事件回调接口缓存
 
@@ -55,11 +51,9 @@ public class WebViewActivity extends BaseActivity {
     protected void initView() {
         mHandler = new Handler(Looper.getMainLooper());
         mCallBackCacheMap = new HashMap<>();
-        Bundle bundle = getIntent().getExtras();
-        if (bundle != null) {
-            loadUrl = bundle.getString(URL_KEY);
-        }
+
         initWebView();
+        String loadUrl = SharedPreferencesHelper.getInstance().getAppData(SharedPreferencesHelper.KEY_APP_SERVER_ADDRESS, "");
         mWebView.loadUrl(loadUrl);
     }
 

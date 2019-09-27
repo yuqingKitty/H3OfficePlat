@@ -2,7 +2,6 @@ package com.aotuo.h3officeplat.activity;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -41,37 +40,32 @@ public class ConfigServerAddressActivity extends BaseActivity implements View.On
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
-            case R.id.iv_back:
-            case R.id.tv_config_next:
-                // 跳转到登录页面
-                Bundle bundle = new Bundle();
-                bundle.putString(WebViewActivity.URL_KEY, WebViewActivity.URL_H5_LOGIN);
-                changeView(WebViewActivity.class, bundle);
-                break;
-            case R.id.tv_right_title:
-                // 检测
-                String serverAddress = et_input_server.getText().toString();
-                if (TextUtils.isEmpty(serverAddress)){
-                    showToast(getString(R.string.server_address_is_empty));
-                } else if (serverAddress.startsWith("http:") || serverAddress.startsWith("https:")){
-                    Uri uri = Uri.parse(serverAddress);
-                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                    startActivity(intent);
+        if (view.getId() == R.id.iv_back) {
+            finish();
+        } else {
+            String serverAddress = et_input_server.getText().toString();
+            if (TextUtils.isEmpty(serverAddress)) {
+                showToast(getString(R.string.server_address_is_empty));
+            } else {
+                if (serverAddress.startsWith("http:") || serverAddress.startsWith("https:")) {
                     SharedPreferencesHelper.getInstance().setAppData(SharedPreferencesHelper.KEY_APP_SERVER_ADDRESS, serverAddress);
+                    switch (view.getId()) {
+                        case R.id.tv_config_next:
+                            // 跳转H5
+                            changeView(WebViewActivity.class);
+                            break;
+                        case R.id.tv_right_title:
+                            // 检测
+                            Uri uri = Uri.parse(serverAddress);
+                            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                            startActivity(intent);
+                            break;
+                    }
                 } else {
                     showToast(getString(R.string.server_address_format_error));
                 }
-                break;
+            }
         }
-    }
-
-    @Override
-    public void onBackPressed() {
-        //点击返回按钮，跳转到登录页面
-        Bundle bundle = new Bundle();
-        bundle.putString(WebViewActivity.URL_KEY, WebViewActivity.URL_H5_LOGIN);
-        changeView(WebViewActivity.class, bundle);
     }
 
 }

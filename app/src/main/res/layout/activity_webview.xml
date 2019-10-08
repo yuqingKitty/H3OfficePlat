@@ -5,11 +5,11 @@
     android:background="@color/color_FFFFFF"
     android:orientation="vertical">
 
-    <WebView
-        android:id="@+id/webview"
+    <com.github.lzyzsd.jsbridge.BridgeWebView
+        android:id="@+id/bridge_webview"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    </WebView>
+    </com.github.lzyzsd.jsbridge.BridgeWebView>
 
     <ProgressBar
         android:id="@+id/progressBar"

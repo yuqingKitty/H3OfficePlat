@@ -6,12 +6,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.net.http.SslError;
-import android.os.Handler;
-import android.os.Looper;
-import android.util.Log;
 import android.view.View;
 import android.webkit.DownloadListener;
-import android.webkit.JavascriptInterface;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -19,28 +15,28 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.aotuo.h3officeplat.R;
 import com.aotuo.h3officeplat.utils.SharedPreferencesHelper;
-
-import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
+import com.github.lzyzsd.jsbridge.BridgeHandler;
+import com.github.lzyzsd.jsbridge.BridgeWebView;
+import com.github.lzyzsd.jsbridge.CallBackFunction;
+import com.github.lzyzsd.jsbridge.DefaultHandler;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import cn.jpush.android.api.JPushInterface;
 
 public class WebViewActivity extends BaseActivity {
-    @BindView(R.id.webview)
-    WebView mWebView;
+    @BindView(R.id.bridge_webview)
+    BridgeWebView bridgeWebView;
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
     @BindView(R.id.iv_setting)
     ImageView iv_setting;
 
-    private Handler mHandler;
-    private Map<String, String> mCallBackCacheMap;  // JS事件回调接口缓存
+    private Context mContext;
 
     @Override
     protected int getLayout() {
@@ -49,42 +45,48 @@ public class WebViewActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        mHandler = new Handler(Looper.getMainLooper());
-        mCallBackCacheMap = new HashMap<>();
-
+        mContext = this;
         initWebView();
         String loadUrl = SharedPreferencesHelper.getInstance().getAppData(SharedPreferencesHelper.KEY_APP_SERVER_ADDRESS, "");
-        mWebView.loadUrl(loadUrl);
+        bridgeWebView.loadUrl(loadUrl);
     }
 
     private void initWebView() {
-        mWebView.setWebContentsDebuggingEnabled(true);
-        mWebView.getSettings().setDefaultFontSize(16);
-        mWebView.getSettings().setTextZoom(100);
-        mWebView.getSettings().setDefaultTextEncodingName("UTF-8");
-        mWebView.getSettings().setJavaScriptEnabled(true);
-        mWebView.getSettings().setUserAgentString(mWebView.getSettings().getUserAgentString() + " " + "h3officeplat");
-        mWebView.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
+        bridgeWebView.setWebContentsDebuggingEnabled(true);
+        bridgeWebView.getSettings().setDefaultFontSize(16);
+        bridgeWebView.getSettings().setTextZoom(100);
+        bridgeWebView.getSettings().setDefaultTextEncodingName("UTF-8");
+        bridgeWebView.getSettings().setJavaScriptEnabled(true);
+        bridgeWebView.getSettings().setUserAgentString(bridgeWebView.getSettings().getUserAgentString() + " " + "h3officeplat");
+        bridgeWebView.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
         // 设置可以使用localStorage
-        mWebView.getSettings().setDomStorageEnabled(true);
-        mWebView.getSettings().setLoadsImagesAutomatically(true);
-        mWebView.getSettings().setBlockNetworkImage(false);
-        mWebView.getSettings().setSavePassword(false);
-        mWebView.getSettings().setUserAgentString(mWebView.getSettings().getUserAgentString());
-        mWebView.getSettings().setDatabaseEnabled(true);  // 应用可以有数据库
-        mWebView.getSettings().setAppCacheEnabled(true);  // 应用可以有缓存
-        mWebView.setDownloadListener(new MyDownLoadListener(this));  // 下载响应
-        mWebView.addJavascriptInterface(new MyJavaScriptInterface(), "WebViewJavascriptBridge");
-        mWebView.addJavascriptInterface(new Object() {
-
-            @JavascriptInterface
-            public void closeWindow() {
-                finish();
+        bridgeWebView.getSettings().setDomStorageEnabled(true);
+        bridgeWebView.getSettings().setLoadsImagesAutomatically(true);
+        bridgeWebView.getSettings().setBlockNetworkImage(false);
+        bridgeWebView.getSettings().setSavePassword(false);
+        bridgeWebView.getSettings().setDatabaseEnabled(true);  // 应用可以有数据库
+        bridgeWebView.getSettings().setAppCacheEnabled(true);  // 应用可以有缓存
+        bridgeWebView.setDownloadListener(new MyDownLoadListener(this));  // 下载响应
+        bridgeWebView.setDefaultHandler(new DefaultHandler());
+        // Register a Java handler function so that js can call(JS调用Android，Android接收数据)
+        bridgeWebView.registerHandler("submitFromWeb", new BridgeHandler() {
+            @Override
+            public void handler(String data, CallBackFunction function) {
+                String msg = "android 接收到js的数据：" + data;
+                Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
+                function.onCallBack("android接收完毕，并可回传数据给js"); //回传数据给js
             }
-        }, "MyHandler");
+        });
 
+        // Register a JavaScript handler function so that Java can call(Android调用JS，Android发送数据)
+        bridgeWebView.callHandler("functionInJs", "android send " + JPushInterface.getRegistrationID(mContext), new CallBackFunction() {
+            @Override
+            public void onCallBack(String data) {
+                Toast.makeText(mContext, data, Toast.LENGTH_SHORT).show();
+            }
+        });
 
-        mWebView.setWebChromeClient(new WebChromeClient() {
+        bridgeWebView.setWebChromeClient(new WebChromeClient() {
             @Override
             public void onReceivedTitle(WebView view, String title) {
                 super.onReceivedTitle(view, title);
@@ -96,7 +98,7 @@ public class WebViewActivity extends BaseActivity {
                 super.onProgressChanged(view, newProgress);
             }
         });
-        mWebView.setWebViewClient(new WebViewClient() {
+        bridgeWebView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 if (url.startsWith("tel:")) {
@@ -109,10 +111,8 @@ public class WebViewActivity extends BaseActivity {
             }
 
             @Override
-            public void onReceivedError(WebView view, int errorCode,
-                                        String description, String failingUrl) {
+            public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
                 super.onReceivedError(view, errorCode, description, failingUrl);
-
             }
 
             @Override
@@ -140,66 +140,13 @@ public class WebViewActivity extends BaseActivity {
         });
     }
 
-    // js本地接口
-    class MyJavaScriptInterface {
-        /**
-         * @param eventCode      JS请求native处理的功能编号
-         * @param paramString    json格式化的字符串参数
-         * @param callbackString native需回调的JS方法（没有返回则不需要回调）
-         */
-        @JavascriptInterface
-        public void callHandler(final String eventCode, final String paramString, String callbackString) {
-            mCallBackCacheMap.put(eventCode, callbackString);
-            mHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    nativeExecute(eventCode, paramString);
-                }
-            });
-        }
-    }
-
-    private void nativeExecute(String eventCode, String paramString) {
-
-    }
-
-
-    /**
-     * WebView回调JS方法
-     */
-    private void callJsHandle(String eventCode, JSONObject param) {
-        String method = mCallBackCacheMap.get(eventCode);
-        if (method == null || "".equals(method)) {
-            return;
-        }
-
-        // JSWEBVIEW　html直接传递可执行方法体  V4.0.5版本之后加入兼容
-        if (method.contains("{")) {
-            if (param == null) {
-                mWebView.loadUrl("javascript:(" + method + "())");
-            } else {
-                mWebView.loadUrl("javascript:(" + method + "('" + param.toString() + "'))");
-            }
-            return;
-        }
-        Log.i("JsWebView", "eventCode:" + eventCode + "   method:" + method + "  param:" + param);
-        try {
-            if (param == null) {
-                mWebView.loadUrl("javascript:" + method + "()");
-            } else {
-                mWebView.loadUrl("javascript:" + method + "('" + param.toString() + "')");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     @Override
     public void onBackPressed() {
-        if (mWebView != null && mWebView.canGoBack()) {
+        if (bridgeWebView != null && bridgeWebView.canGoBack()) {
             // 防止重定位，无法正确返回，goBack两次
-            mWebView.goBack();
-            mWebView.goBack();
+            bridgeWebView.goBack();
+            bridgeWebView.goBack();
         } else {
             super.onBackPressed();
             finish();

@@ -18,6 +18,9 @@ import com.aotuo.h3officeplat.utils.SharedPreferencesHelper;
 import butterknife.BindView;
 import butterknife.OnClick;
 
+/**
+ * 启动页
+ */
 public class SplashActivity extends BaseActivity implements GestureDetector.OnGestureListener {
     static final int TIME_OUT = 1000;
     static final int MSG_TIME_OUT = 1;

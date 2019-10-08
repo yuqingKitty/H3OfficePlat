@@ -16,6 +16,9 @@ import com.aotuo.h3officeplat.view.TitleView;
 
 import butterknife.BindView;
 
+/**
+ * 设置-服务地址-编辑
+ */
 public class EditServerAddressActivity extends BaseActivity implements View.OnClickListener {
     @BindView(R.id.title_view)
     TitleView title_view;
@@ -44,7 +47,7 @@ public class EditServerAddressActivity extends BaseActivity implements View.OnCl
         String serverAddress = SharedPreferencesHelper.getInstance().getAppData(SharedPreferencesHelper.KEY_APP_SERVER_ADDRESS, "");
         et_serve_address.setText(serverAddress);
         et_serve_address.setSelection(serverAddress.length());
-        if (!TextUtils.isEmpty(serverAddress)){
+        if (!TextUtils.isEmpty(serverAddress)) {
             iv_delete_server.setVisibility(View.VISIBLE);
         } else {
             iv_delete_server.setVisibility(View.INVISIBLE);
@@ -53,16 +56,16 @@ public class EditServerAddressActivity extends BaseActivity implements View.OnCl
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.iv_back:
                 finish();
                 break;
             case R.id.tv_right_title:
                 // 保存
                 String serverAddress = et_serve_address.getText().toString();
-                if (TextUtils.isEmpty(serverAddress)){
+                if (TextUtils.isEmpty(serverAddress)) {
                     new CommonDialog(this);
-                } else if (serverAddress.startsWith("http:") || serverAddress.startsWith("https:")){
+                } else if (serverAddress.startsWith("http:") || serverAddress.startsWith("https:")) {
                     Uri uri = Uri.parse(serverAddress);
                     Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                     startActivity(intent);
@@ -90,11 +93,12 @@ public class EditServerAddressActivity extends BaseActivity implements View.OnCl
 
         @Override
         public void afterTextChanged(Editable s) {
-            if (TextUtils.isEmpty(et_serve_address.getText().toString().trim())){
+            if (TextUtils.isEmpty(et_serve_address.getText().toString().trim())) {
                 iv_delete_server.setVisibility(View.INVISIBLE);
             } else {
                 iv_delete_server.setVisibility(View.VISIBLE);
             }
         }
     };
+
 }

@@ -15,6 +15,9 @@ import butterknife.OnClick;
 import static com.aotuo.h3officeplat.utils.SharedPreferencesHelper.KEY_APP_USE_LANGUAGE;
 import static com.aotuo.h3officeplat.utils.SharedPreferencesHelper.KEY_APP_USE_LANGUAGE_ZH;
 
+/**
+ * 设置
+ */
 public class SettingActivity extends BaseActivity {
     @BindView(R.id.title_view)
     TitleView title_view;
@@ -24,6 +27,7 @@ public class SettingActivity extends BaseActivity {
     TextView tv_current_language;
     @BindView(R.id.tv_current_version)
     TextView tv_current_version;
+
 
     @Override
     protected int getLayout() {
@@ -44,7 +48,7 @@ public class SettingActivity extends BaseActivity {
         tv_current_language.setText(language);
     }
 
-    private String getVersionName(){
+    private String getVersionName() {
         String versionName = "";
         try {
             PackageManager pm = getPackageManager();

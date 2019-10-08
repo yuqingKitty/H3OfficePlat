@@ -12,6 +12,9 @@ import com.aotuo.h3officeplat.view.TitleView;
 
 import butterknife.BindView;
 
+/**
+ * 设置-服务地址
+ */
 public class ServerAddressActivity extends BaseActivity implements View.OnClickListener {
     @BindView(R.id.title_view)
     TitleView title_view;
@@ -42,7 +45,7 @@ public class ServerAddressActivity extends BaseActivity implements View.OnClickL
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.iv_back:
                 finish();
                 break;
@@ -53,9 +56,9 @@ public class ServerAddressActivity extends BaseActivity implements View.OnClickL
             case R.id.tv_check_next:
                 // 检测
                 String serverAddress = tv_saved_serve_address.getText().toString();
-                if (TextUtils.isEmpty(serverAddress)){
+                if (TextUtils.isEmpty(serverAddress)) {
                     showToast(getString(R.string.server_address_is_empty));
-                } else if (serverAddress.startsWith("http:") || serverAddress.startsWith("https:")){
+                } else if (serverAddress.startsWith("http:") || serverAddress.startsWith("https:")) {
                     Uri uri = Uri.parse(serverAddress);
                     Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                     startActivity(intent);

@@ -15,7 +15,6 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.aotuo.h3officeplat.R;
 import com.aotuo.h3officeplat.utils.SharedPreferencesHelper;
@@ -59,21 +58,19 @@ public class WebViewActivity extends BaseActivity {
         bridgeWebView.getSettings().setJavaScriptEnabled(true);
         bridgeWebView.getSettings().setUserAgentString(bridgeWebView.getSettings().getUserAgentString() + " " + "h3officeplat");
         bridgeWebView.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
-        // 设置可以使用localStorage
-        bridgeWebView.getSettings().setDomStorageEnabled(true);
+        bridgeWebView.getSettings().setDomStorageEnabled(true);  // 设置可以使用localStorage
         bridgeWebView.getSettings().setLoadsImagesAutomatically(true);
         bridgeWebView.getSettings().setBlockNetworkImage(false);
-        bridgeWebView.getSettings().setSavePassword(false);
-        bridgeWebView.getSettings().setDatabaseEnabled(true);  // 应用可以有数据库
-        bridgeWebView.getSettings().setAppCacheEnabled(true);  // 应用可以有缓存
-        bridgeWebView.setDownloadListener(new MyDownLoadListener(this));  // 下载响应
+        bridgeWebView.getSettings().setDatabaseEnabled(true);   // 应用可以有数据库
+        bridgeWebView.getSettings().setAppCacheEnabled(true);   // 应用可以有缓存
+        bridgeWebView.setDownloadListener(new MyDownLoadListener(this));   // 下载响应
         bridgeWebView.setDefaultHandler(new DefaultHandler());
         // Register a Java handler function so that js can call(JS调用Android，Android接收数据)
         bridgeWebView.registerHandler("submitFromWeb", new BridgeHandler() {
             @Override
             public void handler(String data, CallBackFunction function) {
                 String msg = "android 接收到js的数据：" + data;
-                Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
+                showToast(msg);
                 function.onCallBack("android接收完毕，并可回传数据给js"); //回传数据给js
             }
         });
@@ -82,7 +79,7 @@ public class WebViewActivity extends BaseActivity {
         bridgeWebView.callHandler("functionInJs", "android send " + JPushInterface.getRegistrationID(mContext), new CallBackFunction() {
             @Override
             public void onCallBack(String data) {
-                Toast.makeText(mContext, data, Toast.LENGTH_SHORT).show();
+                showToast(data);
             }
         });
 

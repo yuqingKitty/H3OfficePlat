@@ -37,7 +37,6 @@ public class ConfigServerAddressActivity extends BaseActivity implements View.On
         tv_config_next.setOnClickListener(this);
     }
 
-
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.iv_back) {

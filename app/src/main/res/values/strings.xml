@@ -24,5 +24,7 @@
     <string name="save">保存</string>
     <string name="finish">完成</string>
 
-    <string name="grant_camera_permission">请打开相机权限</string>
+    <string name="access_request">权限申请</string>
+    <string name="grant_camera_permission">请在"设置"-"应用"-"H3 BPM"-"权限"中开启相机及存储权限，以便正常使用H3 BPM的功能。</string>
+    <string name="confirm">确定</string>
 </resources>

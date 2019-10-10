@@ -15,12 +15,21 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/tv_dialog_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_10"
+            android:textColor="@color/color_000000"
+            android:textSize="@dimen/sp_17" />
+
+        <TextView
+            android:id="@+id/tv_dialog_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/dp_28"
             android:layout_marginTop="@dimen/dp_30"
             android:gravity="center"
-            android:text="@string/server_address_is_empty"
             android:textColor="@color/color_000000"
             android:textSize="@dimen/sp_16" />
 
@@ -30,11 +39,10 @@
             android:background="@color/color_B6B6B6"/>
 
         <TextView
-            android:id="@+id/tv_dialog_commit"
+            android:id="@+id/tv_dialog_confirm"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_43"
             android:gravity="center"
-            android:text="@string/know_it"
             android:textColor="@color/color_38ADFF"
             android:textSize="@dimen/sp_16" />
     </LinearLayout>

@@ -64,7 +64,7 @@ public class EditServerAddressActivity extends BaseActivity implements View.OnCl
                 // 保存
                 String serverAddress = et_serve_address.getText().toString();
                 if (TextUtils.isEmpty(serverAddress)) {
-                    new CommonDialog(this);
+                    new CommonDialog(this, "", getResources().getString(R.string.server_address_is_empty), getResources().getString(R.string.know_it));
                 } else if (serverAddress.startsWith("http:") || serverAddress.startsWith("https:")) {
                     Uri uri = Uri.parse(serverAddress);
                     Intent intent = new Intent(Intent.ACTION_VIEW, uri);

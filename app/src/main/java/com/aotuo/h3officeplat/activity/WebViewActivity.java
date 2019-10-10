@@ -13,6 +13,7 @@ import android.widget.ImageView;
 
 import com.aotuo.h3officeplat.R;
 import com.aotuo.h3officeplat.utils.SharedPreferencesHelper;
+import com.aotuo.h3officeplat.view.CommonDialog;
 import com.github.lzyzsd.jsbridge.BridgeHandler;
 import com.github.lzyzsd.jsbridge.BridgeWebView;
 import com.github.lzyzsd.jsbridge.CallBackFunction;
@@ -52,8 +53,7 @@ public class WebViewActivity extends BaseActivity {
         bridgeWebView.getSettings().setDefaultTextEncodingName("UTF-8");
         bridgeWebView.getSettings().setJavaScriptEnabled(true);
         bridgeWebView.getSettings().setUserAgentString(bridgeWebView.getSettings().getUserAgentString() + " " + "h3officeplat");
-//        bridgeWebView.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
-        bridgeWebView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
+        bridgeWebView.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
         bridgeWebView.getSettings().setDomStorageEnabled(true);  // 设置可以使用localStorage
         bridgeWebView.getSettings().setLoadsImagesAutomatically(true);
         bridgeWebView.getSettings().setBlockNetworkImage(false);
@@ -67,11 +67,9 @@ public class WebViewActivity extends BaseActivity {
                 try {
                     JSONObject paramJson = new JSONObject(data);
                     String param = paramJson.getString("param");
-                    String msg = "android 接收到js的param：" + param;
-                    showToast(msg);
                     switch (param) {
                         case "JIGUANG":
-                            function.onCallBack("{jpushid:" + JPushInterface.getRegistrationID(mContext) + "}"); //回传数据给js
+                            function.onCallBack(JPushInterface.getRegistrationID(mContext)); //回传极光ID数据给js
                             break;
                         case "SETTING_SHOW":
                             iv_setting.setVisibility(View.VISIBLE);
@@ -81,9 +79,10 @@ public class WebViewActivity extends BaseActivity {
                             break;
                         case "OPEN_CAMERA":
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                int storePermission = checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
                                 int cameraPermission = checkSelfPermission(Manifest.permission.CAMERA);
-                                if (cameraPermission != PackageManager.PERMISSION_GRANTED) {
-                                    showToast(getResources().getString(R.string.app_name));
+                                if (storePermission != PackageManager.PERMISSION_GRANTED || cameraPermission != PackageManager.PERMISSION_GRANTED) {
+                                    new CommonDialog(mContext, getResources().getString(R.string.access_request), getResources().getString(R.string.grant_camera_permission), getResources().getString(R.string.confirm));
                                 }
                             }
                             break;

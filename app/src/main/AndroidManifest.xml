@@ -28,10 +28,6 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".activity.MainActivity"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            android:launchMode="singleTask"/>
-
         <activity android:name=".activity.ConfigServerAddressActivity"/>
         <activity android:name=".activity.SettingActivity"/>
         <activity android:name=".activity.ServerAddressActivity"/>

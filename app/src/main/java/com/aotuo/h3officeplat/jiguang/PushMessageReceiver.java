@@ -2,9 +2,12 @@ package com.aotuo.h3officeplat.jiguang;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.util.Log;
 
-import com.aotuo.h3officeplat.activity.MainActivity;
+import com.aotuo.h3officeplat.activity.ConfigServerAddressActivity;
+import com.aotuo.h3officeplat.activity.WebViewActivity;
+import com.aotuo.h3officeplat.utils.SharedPreferencesHelper;
 
 import cn.jpush.android.api.CustomMessage;
 import cn.jpush.android.api.NotificationMessage;
@@ -20,7 +23,13 @@ public class PushMessageReceiver extends JPushMessageReceiver {
     @Override
     public void onNotifyMessageOpened(Context context, NotificationMessage message) {
         Log.e(TAG,"[onNotifyMessageOpened] "+message);
-        context.startActivity(new Intent(context, MainActivity.class));
+        String serverAddress = SharedPreferencesHelper.getInstance().getAppData(SharedPreferencesHelper.KEY_APP_SERVER_ADDRESS, "");
+        if (TextUtils.isEmpty(serverAddress)) {
+            // 跳转到服务器配置地址
+            context.startActivity(new Intent(context, ConfigServerAddressActivity.class));
+        } else {
+            context.startActivity(new Intent(context, WebViewActivity.class));
+        }
     }
 
     @Override

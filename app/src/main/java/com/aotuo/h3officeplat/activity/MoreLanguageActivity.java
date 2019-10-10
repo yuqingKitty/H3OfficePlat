@@ -1,11 +1,14 @@
 package com.aotuo.h3officeplat.activity;
 
+import android.content.Intent;
+import android.os.Build;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.aotuo.h3officeplat.R;
+import com.aotuo.h3officeplat.utils.LanguageUtil;
 import com.aotuo.h3officeplat.utils.SharedPreferencesHelper;
 import com.aotuo.h3officeplat.view.TitleView;
 
@@ -68,7 +71,7 @@ public class MoreLanguageActivity extends BaseActivity implements View.OnClickLi
                 } else {
                     SharedPreferencesHelper.getInstance().setAppData(KEY_APP_USE_LANGUAGE, KEY_APP_USE_LANGUAGE_EN);
                 }
-                finish();
+                changeLanguage();
                 break;
             case R.id.rl_language_chinese:
                 selectedPosition = 0;
@@ -93,6 +96,22 @@ public class MoreLanguageActivity extends BaseActivity implements View.OnClickLi
             tv_language_chinese.setTextColor(getResources().getColor(R.color.color_2C3038));
             iv_chinese_selected.setVisibility(View.GONE);
         }
+    }
+
+
+    /**
+     * 如果是7.0以下，我们需要调用changeAppLanguage方法
+     * 如果是7.0及以上系统，直接把我们想要切换的语言类型保存在SharedPreferences中,然后重新启动SettingActivity即可
+     */
+    private void changeLanguage() {
+        String language = SharedPreferencesHelper.getInstance().getAppData(KEY_APP_USE_LANGUAGE, KEY_APP_USE_LANGUAGE_ZH);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+            LanguageUtil.changeAppLanguage(this, language);
+        }
+        Intent intent = new Intent(this, SettingActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
     }
 
 }

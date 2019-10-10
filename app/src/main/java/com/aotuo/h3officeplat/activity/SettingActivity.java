@@ -45,7 +45,11 @@ public class SettingActivity extends BaseActivity {
         String serverAddress = SharedPreferencesHelper.getInstance().getAppData(SharedPreferencesHelper.KEY_APP_SERVER_ADDRESS, "");
         tv_serve_address.setText(serverAddress);
         String language = SharedPreferencesHelper.getInstance().getAppData(KEY_APP_USE_LANGUAGE, KEY_APP_USE_LANGUAGE_ZH);
-        tv_current_language.setText(language);
+        if (language.equals(KEY_APP_USE_LANGUAGE_ZH)){
+            tv_current_language.setText(getResources().getString(R.string.language_chinese));
+        } else {
+            tv_current_language.setText(getResources().getString(R.string.language_english));
+        }
     }
 
     private String getVersionName() {
@@ -60,9 +64,12 @@ public class SettingActivity extends BaseActivity {
         return versionName;
     }
 
-    @OnClick({R.id.tv_serve_address, R.id.tv_current_language})
+    @OnClick({R.id.iv_back, R.id.tv_serve_address, R.id.tv_current_language})
     void click(View view) {
         switch (view.getId()) {
+            case R.id.iv_back:
+                finish();
+                break;
             case R.id.tv_serve_address:
                 // 服务地址
                 changeView(ServerAddressActivity.class);

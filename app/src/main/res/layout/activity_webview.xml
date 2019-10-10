@@ -17,7 +17,6 @@
         android:layout_height="wrap_content"
         android:src="@drawable/icon_setting"
         android:layout_gravity="right"
-        android:padding="@dimen/dp_20"
-        android:visibility="gone"/>
+        android:padding="@dimen/dp_20"/>
 
 </FrameLayout>

@@ -23,4 +23,6 @@
     <string name="edit">编辑</string>
     <string name="save">保存</string>
     <string name="finish">完成</string>
+
+    <string name="grant_camera_permission">请打开相机权限</string>
 </resources>

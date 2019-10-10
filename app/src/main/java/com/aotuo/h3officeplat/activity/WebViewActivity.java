@@ -1,12 +1,15 @@
 package com.aotuo.h3officeplat.activity;
 
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.view.View;
 import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 
 import com.aotuo.h3officeplat.R;
 import com.aotuo.h3officeplat.utils.SharedPreferencesHelper;
@@ -24,8 +27,6 @@ import cn.jpush.android.api.JPushInterface;
 public class WebViewActivity extends BaseActivity {
     @BindView(R.id.bridge_webview)
     BridgeWebView bridgeWebView;
-    @BindView(R.id.progressBar)
-    ProgressBar progressBar;
     @BindView(R.id.iv_setting)
     ImageView iv_setting;
 
@@ -46,8 +47,18 @@ public class WebViewActivity extends BaseActivity {
 
     private void initWebView() {
         bridgeWebView.setWebContentsDebuggingEnabled(true);
+        bridgeWebView.getSettings().setDefaultFontSize(16);
+        bridgeWebView.getSettings().setTextZoom(100);
+        bridgeWebView.getSettings().setDefaultTextEncodingName("UTF-8");
         bridgeWebView.getSettings().setJavaScriptEnabled(true);
         bridgeWebView.getSettings().setUserAgentString(bridgeWebView.getSettings().getUserAgentString() + " " + "h3officeplat");
+//        bridgeWebView.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
+        bridgeWebView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
+        bridgeWebView.getSettings().setDomStorageEnabled(true);  // 设置可以使用localStorage
+        bridgeWebView.getSettings().setLoadsImagesAutomatically(true);
+        bridgeWebView.getSettings().setBlockNetworkImage(false);
+        bridgeWebView.getSettings().setDatabaseEnabled(true);   // 应用可以有数据库
+        bridgeWebView.getSettings().setAppCacheEnabled(true);   // 应用可以有缓存
         bridgeWebView.setDefaultHandler(new DefaultHandler());
         // Register a Java handler function so that js can call(JS调用Android，Android接收数据)
         bridgeWebView.registerHandler("submitFromWeb", new BridgeHandler() {
@@ -56,17 +67,25 @@ public class WebViewActivity extends BaseActivity {
                 try {
                     JSONObject paramJson = new JSONObject(data);
                     String param = paramJson.getString("param");
-                    String msg = "android 接收到js的数据：" + param;
+                    String msg = "android 接收到js的param：" + param;
                     showToast(msg);
                     switch (param) {
-                        case "GIGUANG":
-                            function.onCallBack(JPushInterface.getRegistrationID(mContext)); //回传数据给js
+                        case "JIGUANG":
+                            function.onCallBack("{jpushid:" + JPushInterface.getRegistrationID(mContext) + "}"); //回传数据给js
                             break;
                         case "SETTING_SHOW":
                             iv_setting.setVisibility(View.VISIBLE);
                             break;
                         case "SETTING_HIDE":
                             iv_setting.setVisibility(View.GONE);
+                            break;
+                        case "OPEN_CAMERA":
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                int cameraPermission = checkSelfPermission(Manifest.permission.CAMERA);
+                                if (cameraPermission != PackageManager.PERMISSION_GRANTED) {
+                                    showToast(getResources().getString(R.string.app_name));
+                                }
+                            }
                             break;
                     }
                 } catch (Exception e) {
@@ -83,7 +102,6 @@ public class WebViewActivity extends BaseActivity {
 
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
-                progressBar.setProgress(newProgress);
                 super.onProgressChanged(view, newProgress);
             }
         });

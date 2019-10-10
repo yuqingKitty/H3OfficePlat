@@ -23,4 +23,5 @@
     <string name="edit">Edit</string>
     <string name="save">Save</string>
     <string name="finish">Finished</string>
+    <string name="grant_camera_permission">please grant camera permission</string>
 </resources>

@@ -1,5 +1,8 @@
 package com.aotuo.h3officeplat.activity;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
@@ -22,8 +25,9 @@ import butterknife.OnClick;
  * 启动页
  */
 public class SplashActivity extends BaseActivity implements GestureDetector.OnGestureListener {
-    static final int TIME_OUT = 1000;
-    static final int MSG_TIME_OUT = 1;
+    private static final int REQUEST_TAKE_GRANT = 10000;
+    private static final int TIME_OUT = 1000;
+    private static final int MSG_TIME_OUT = 1;
 
     @BindView(R.id.iv_splash)
     ImageView iv_splash;
@@ -69,6 +73,11 @@ public class SplashActivity extends BaseActivity implements GestureDetector.OnGe
         leftOutAnimation = AnimationUtils.loadAnimation(this, R.anim.left_out);
         rightInAnimation = AnimationUtils.loadAnimation(this, R.anim.right_in);
         rightOutAnimation = AnimationUtils.loadAnimation(this, R.anim.right_out);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            // 申请相机权限
+            takePhotoGrant();
+        }
     }
 
     private boolean isFirstUse() {
@@ -154,6 +163,24 @@ public class SplashActivity extends BaseActivity implements GestureDetector.OnGe
             changeView(WebViewActivity.class);
         }
         finish();
+    }
+
+    /**
+     * 23以上的，拍照-主动授权
+     * 存储权限、相机权限
+     */
+    private void takePhotoGrant() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            int storePermission = checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            int cameraPermission = checkSelfPermission(Manifest.permission.CAMERA);
+            if (storePermission != PackageManager.PERMISSION_GRANTED && cameraPermission != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, REQUEST_TAKE_GRANT);
+            } else if (storePermission != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_TAKE_GRANT);
+            } else if (cameraPermission != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_TAKE_GRANT);
+            }
+        }
     }
 
 }

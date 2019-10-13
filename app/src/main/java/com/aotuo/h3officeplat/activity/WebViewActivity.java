@@ -12,6 +12,8 @@ import android.webkit.WebView;
 import android.widget.ImageView;
 
 import com.aotuo.h3officeplat.R;
+import com.aotuo.h3officeplat.bean.MessageEvent;
+import com.aotuo.h3officeplat.utils.LanguageUtil;
 import com.aotuo.h3officeplat.utils.SharedPreferencesHelper;
 import com.aotuo.h3officeplat.view.CommonDialog;
 import com.github.lzyzsd.jsbridge.BridgeHandler;
@@ -19,11 +21,18 @@ import com.github.lzyzsd.jsbridge.BridgeWebView;
 import com.github.lzyzsd.jsbridge.CallBackFunction;
 import com.github.lzyzsd.jsbridge.DefaultHandler;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.json.JSONObject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.jpush.android.api.JPushInterface;
+
+import static com.aotuo.h3officeplat.utils.SharedPreferencesHelper.KEY_APP_USE_LANGUAGE;
+import static com.aotuo.h3officeplat.utils.SharedPreferencesHelper.KEY_APP_USE_LANGUAGE_EN;
+import static com.aotuo.h3officeplat.utils.SharedPreferencesHelper.KEY_APP_USE_LANGUAGE_ZH;
 
 public class WebViewActivity extends BaseActivity {
     @BindView(R.id.bridge_webview)
@@ -44,6 +53,7 @@ public class WebViewActivity extends BaseActivity {
         initWebView();
         String loadUrl = SharedPreferencesHelper.getInstance().getAppData(SharedPreferencesHelper.KEY_APP_SERVER_ADDRESS, "");
         bridgeWebView.loadUrl(loadUrl);
+        EventBus.getDefault().register(this);
     }
 
     private void initWebView() {
@@ -86,6 +96,14 @@ public class WebViewActivity extends BaseActivity {
                                 }
                             }
                             break;
+                        case "LANGUAGE_ZH":
+                            SharedPreferencesHelper.getInstance().setAppData(KEY_APP_USE_LANGUAGE, KEY_APP_USE_LANGUAGE_ZH);
+                            changeLanguage();
+                            break;
+                        case "LANGUAGE_EN":
+                            SharedPreferencesHelper.getInstance().setAppData(KEY_APP_USE_LANGUAGE, KEY_APP_USE_LANGUAGE_EN);
+                            changeLanguage();
+                            break;
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -125,16 +143,37 @@ public class WebViewActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.iv_setting:
                 changeView(SettingActivity.class);
-//                // Register a JavaScript handler function so that Java can call(Android调用JS，Android发送数据)
-//                bridgeWebView.callHandler("functionInJs", "android send " + JPushInterface.getRegistrationID(mContext), new CallBackFunction() {
-//                    @Override
-//                    public void onCallBack(String data) {
-//                        showToast(data);
-//                    }
-//                });
                 break;
         }
     }
 
+
+    /**
+     * 如果是7.0以下，我们需要调用changeAppLanguage方法
+     * 如果是7.0及以上系统，直接把我们想要切换的语言类型保存在SharedPreferences中,然后重新启动SettingActivity即可
+     */
+    private void changeLanguage() {
+        String language = SharedPreferencesHelper.getInstance().getAppData(KEY_APP_USE_LANGUAGE, KEY_APP_USE_LANGUAGE_ZH);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+            LanguageUtil.changeAppLanguage(this, language);
+        }
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.POSTING)
+    public void onEventMessage(MessageEvent messageEvent){
+        // Register a JavaScript handler function so that Java can call(Android调用JS，Android发送数据)
+        bridgeWebView.callHandler("functionInJs", messageEvent.getMessage(), new CallBackFunction() {
+            @Override
+            public void onCallBack(String data) {
+            }
+        });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
 
 }

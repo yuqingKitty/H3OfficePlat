@@ -8,9 +8,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.aotuo.h3officeplat.R;
+import com.aotuo.h3officeplat.bean.MessageEvent;
 import com.aotuo.h3officeplat.utils.LanguageUtil;
 import com.aotuo.h3officeplat.utils.SharedPreferencesHelper;
 import com.aotuo.h3officeplat.view.TitleView;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 
@@ -68,8 +71,10 @@ public class MoreLanguageActivity extends BaseActivity implements View.OnClickLi
                 // 完成
                 if (selectedPosition == 0) {
                     SharedPreferencesHelper.getInstance().setAppData(KEY_APP_USE_LANGUAGE, KEY_APP_USE_LANGUAGE_ZH);
+                    EventBus.getDefault().post(new MessageEvent("LANGUAGE_ZH"));
                 } else {
                     SharedPreferencesHelper.getInstance().setAppData(KEY_APP_USE_LANGUAGE, KEY_APP_USE_LANGUAGE_EN);
+                    EventBus.getDefault().post(new MessageEvent("LANGUAGE_EN"));
                 }
                 changeLanguage();
                 break;
@@ -109,7 +114,7 @@ public class MoreLanguageActivity extends BaseActivity implements View.OnClickLi
             LanguageUtil.changeAppLanguage(this, language);
         }
         Intent intent = new Intent(this, SettingActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         finish();
     }

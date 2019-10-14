@@ -6,8 +6,11 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.aotuo.h3officeplat.R;
+import com.aotuo.h3officeplat.bean.MessageEvent;
 import com.aotuo.h3officeplat.utils.SharedPreferencesHelper;
 import com.aotuo.h3officeplat.view.TitleView;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -68,6 +71,7 @@ public class SettingActivity extends BaseActivity {
     void click(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
+                EventBus.getDefault().post(new MessageEvent("SETTING_BACK"));
                 finish();
                 break;
             case R.id.tv_serve_address:
@@ -79,5 +83,11 @@ public class SettingActivity extends BaseActivity {
                 changeView(MoreLanguageActivity.class);
                 break;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        EventBus.getDefault().post(new MessageEvent("SETTING_BACK"));
     }
 }

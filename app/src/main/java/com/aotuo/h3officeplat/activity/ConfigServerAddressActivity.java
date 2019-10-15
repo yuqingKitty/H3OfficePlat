@@ -5,9 +5,12 @@ import android.net.Uri;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.aotuo.h3officeplat.R;
+import com.aotuo.h3officeplat.utils.CommonTools;
 import com.aotuo.h3officeplat.utils.SharedPreferencesHelper;
 import com.aotuo.h3officeplat.view.TitleView;
 
@@ -17,6 +20,10 @@ import butterknife.BindView;
  * 配置服务器地址
  */
 public class ConfigServerAddressActivity extends BaseActivity implements View.OnClickListener {
+    @BindView(R.id.iv_net_back)
+    ImageView iv_net_back;
+    @BindView(R.id.ll_no_net)
+    LinearLayout ll_no_net;
     @BindView(R.id.title_view)
     TitleView title_view;
     @BindView(R.id.et_input_server)
@@ -32,14 +39,20 @@ public class ConfigServerAddressActivity extends BaseActivity implements View.On
 
     @Override
     protected void initView() {
+        if (CommonTools.isNetWorkConnected(this)) {
+            ll_no_net.setVisibility(View.GONE);
+        } else {
+            ll_no_net.setVisibility(View.VISIBLE);
+        }
         title_view.getBackBtn().setOnClickListener(this);
         title_view.getRightTitle().setOnClickListener(this);
         tv_config_next.setOnClickListener(this);
+        iv_net_back.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
-        if (view.getId() == R.id.iv_back) {
+        if (view.getId() == R.id.iv_back || view.getId() == R.id.iv_net_back) {
             finish();
         } else {
             String serverAddress = et_input_server.getText().toString();

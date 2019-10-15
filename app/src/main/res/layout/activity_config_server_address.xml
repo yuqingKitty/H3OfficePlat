@@ -6,6 +6,11 @@
     android:background="@color/color_FBFBFB"
     android:orientation="vertical">
 
+    <include
+        android:id="@+id/ll_no_net"
+        layout="@layout/view_no_net"
+        android:visibility="gone" />
+
     <com.aotuo.h3officeplat.view.TitleView
         android:id="@+id/title_view"
         android:layout_width="match_parent"
@@ -19,12 +24,14 @@
         android:layout_marginTop="@dimen/dp_92"
         android:gravity="center_horizontal"
         android:orientation="horizontal">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/please_config_server_address"
             android:textColor="@color/color_2C3038"
             android:textSize="@dimen/sp_17" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -37,15 +44,15 @@
         android:id="@+id/et_input_server"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_45"
-        android:background="@drawable/edit_config_server_bg"
         android:layout_marginLeft="@dimen/dp_21"
-        android:layout_marginRight="@dimen/dp_21"
         android:layout_marginTop="@dimen/dp_16"
+        android:layout_marginRight="@dimen/dp_21"
+        android:background="@drawable/edit_config_server_bg"
         android:hint="@string/input_server_address"
-        android:textColorHint="@color/color_B8B8B8"
+        android:paddingLeft="@dimen/dp_26"
         android:textColor="@color/color_2C3038"
-        android:textSize="@dimen/sp_14"
-        android:paddingLeft="@dimen/dp_26"/>
+        android:textColorHint="@color/color_B8B8B8"
+        android:textSize="@dimen/sp_14" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -55,8 +62,8 @@
             android:id="@+id/tv_config_next"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_44"
-            android:background="@color/color_77BCFA"
             android:layout_alignParentBottom="true"
+            android:background="@color/color_77BCFA"
             android:gravity="center"
             android:text="@string/next"
             android:textColor="@color/color_FFFFFF"

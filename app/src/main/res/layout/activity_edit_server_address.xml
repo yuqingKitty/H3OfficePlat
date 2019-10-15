@@ -6,6 +6,11 @@
     android:background="@color/color_FBFBFB"
     android:orientation="vertical">
 
+    <include
+        android:id="@+id/ll_no_net"
+        layout="@layout/view_no_net"
+        android:visibility="gone" />
+
     <com.aotuo.h3officeplat.view.TitleView
         android:id="@+id/title_view"
         android:layout_width="match_parent"
@@ -26,16 +31,16 @@
             android:layout_centerVertical="true"
             android:padding="@dimen/dp_15"
             android:src="@drawable/icon_delete"
-            android:visibility="invisible"/>
+            android:visibility="invisible" />
 
         <EditText
             android:id="@+id/et_serve_address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="@dimen/dp_48"
             android:layout_toLeftOf="@id/iv_delete_server"
             android:background="@null"
             android:gravity="center_vertical"
+            android:minHeight="@dimen/dp_48"
             android:paddingLeft="@dimen/dp_12"
             android:textColor="@color/color_2C3038"
             android:textSize="@dimen/sp_16" />

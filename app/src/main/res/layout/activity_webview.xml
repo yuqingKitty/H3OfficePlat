@@ -19,4 +19,9 @@
         android:layout_gravity="right"
         android:padding="@dimen/dp_20"/>
 
+    <include
+        android:id="@+id/ll_no_net"
+        layout="@layout/view_no_net"
+        android:visibility="gone"/>
+
 </FrameLayout>

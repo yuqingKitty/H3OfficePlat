@@ -15,10 +15,12 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.aotuo.h3officeplat.R;
 import com.aotuo.h3officeplat.bean.MessageEvent;
+import com.aotuo.h3officeplat.utils.CommonTools;
 import com.aotuo.h3officeplat.utils.LanguageUtil;
 import com.aotuo.h3officeplat.utils.SharedPreferencesHelper;
 import com.aotuo.h3officeplat.view.CommonDialog;
@@ -45,6 +47,8 @@ public class WebViewActivity extends BaseActivity {
     BridgeWebView bridgeWebView;
     @BindView(R.id.iv_setting)
     ImageView iv_setting;
+    @BindView(R.id.ll_no_net)
+    LinearLayout ll_no_net;
 
     private Context mContext;
     private ValueCallback<Uri> mUploadMessage;
@@ -59,6 +63,11 @@ public class WebViewActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        if (CommonTools.isNetWorkConnected(this)){
+            ll_no_net.setVisibility(View.GONE);
+        } else {
+            ll_no_net.setVisibility(View.VISIBLE);
+        }
         mContext = this;
         initWebView();
         String loadUrl = SharedPreferencesHelper.getInstance().getAppData(SharedPreferencesHelper.KEY_APP_SERVER_ADDRESS, "");
@@ -218,9 +227,12 @@ public class WebViewActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.iv_setting})
+    @OnClick({R.id.iv_net_back, R.id.iv_setting})
     void click(View view) {
         switch (view.getId()) {
+            case R.id.iv_net_back:
+                finish();
+                break;
             case R.id.iv_setting:
                 changeView(SettingActivity.class);
                 break;

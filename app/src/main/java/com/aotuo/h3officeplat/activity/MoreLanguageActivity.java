@@ -4,11 +4,13 @@ import android.content.Intent;
 import android.os.Build;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.aotuo.h3officeplat.R;
 import com.aotuo.h3officeplat.bean.MessageEvent;
+import com.aotuo.h3officeplat.utils.CommonTools;
 import com.aotuo.h3officeplat.utils.LanguageUtil;
 import com.aotuo.h3officeplat.utils.SharedPreferencesHelper;
 import com.aotuo.h3officeplat.view.TitleView;
@@ -22,6 +24,10 @@ import static com.aotuo.h3officeplat.utils.SharedPreferencesHelper.KEY_APP_USE_L
 import static com.aotuo.h3officeplat.utils.SharedPreferencesHelper.KEY_APP_USE_LANGUAGE_ZH;
 
 public class MoreLanguageActivity extends BaseActivity implements View.OnClickListener {
+    @BindView(R.id.iv_net_back)
+    ImageView iv_net_back;
+    @BindView(R.id.ll_no_net)
+    LinearLayout ll_no_net;
     @BindView(R.id.title_view)
     TitleView title_view;
     @BindView(R.id.rl_language_chinese)
@@ -47,6 +53,11 @@ public class MoreLanguageActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     protected void initView() {
+        if (CommonTools.isNetWorkConnected(this)) {
+            ll_no_net.setVisibility(View.GONE);
+        } else {
+            ll_no_net.setVisibility(View.VISIBLE);
+        }
         String language = SharedPreferencesHelper.getInstance().getAppData(KEY_APP_USE_LANGUAGE, KEY_APP_USE_LANGUAGE_ZH);
         if (language.equals(KEY_APP_USE_LANGUAGE_ZH)) {
             selectedPosition = 0;
@@ -59,11 +70,13 @@ public class MoreLanguageActivity extends BaseActivity implements View.OnClickLi
         title_view.getRightTitle().setOnClickListener(this);
         rl_language_chinese.setOnClickListener(this);
         rl_language_english.setOnClickListener(this);
+        iv_net_back.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.iv_net_back:
             case R.id.iv_back:
                 finish();
                 break;

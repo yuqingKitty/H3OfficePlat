@@ -23,6 +23,7 @@
     <string name="edit">Edit</string>
     <string name="save">Save</string>
     <string name="finish">Finished</string>
+    <string name="no_net_tip">The network is abnormal,Please confirm the network connection status</string>
 
     <string name="access_request">Access Request</string>
     <string name="grant_camera_permission">Please enable camera and storage permissions in "Settings - Application - H3 BPM - Permissions" in order to use the H3 BPM function normally.</string>

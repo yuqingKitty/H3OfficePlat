@@ -3,10 +3,12 @@ package com.aotuo.h3officeplat.activity;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.aotuo.h3officeplat.R;
 import com.aotuo.h3officeplat.bean.MessageEvent;
+import com.aotuo.h3officeplat.utils.CommonTools;
 import com.aotuo.h3officeplat.utils.SharedPreferencesHelper;
 import com.aotuo.h3officeplat.view.TitleView;
 
@@ -22,6 +24,8 @@ import static com.aotuo.h3officeplat.utils.SharedPreferencesHelper.KEY_APP_USE_L
  * 设置
  */
 public class SettingActivity extends BaseActivity {
+    @BindView(R.id.ll_no_net)
+    LinearLayout ll_no_net;
     @BindView(R.id.title_view)
     TitleView title_view;
     @BindView(R.id.tv_serve_address)
@@ -39,6 +43,11 @@ public class SettingActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        if (CommonTools.isNetWorkConnected(this)) {
+            ll_no_net.setVisibility(View.GONE);
+        } else {
+            ll_no_net.setVisibility(View.VISIBLE);
+        }
         tv_current_version.setText(getVersionName());
     }
 
@@ -48,7 +57,7 @@ public class SettingActivity extends BaseActivity {
         String serverAddress = SharedPreferencesHelper.getInstance().getAppData(SharedPreferencesHelper.KEY_APP_SERVER_ADDRESS, "");
         tv_serve_address.setText(serverAddress);
         String language = SharedPreferencesHelper.getInstance().getAppData(KEY_APP_USE_LANGUAGE, KEY_APP_USE_LANGUAGE_ZH);
-        if (language.equals(KEY_APP_USE_LANGUAGE_ZH)){
+        if (language.equals(KEY_APP_USE_LANGUAGE_ZH)) {
             tv_current_language.setText(getResources().getString(R.string.language_chinese));
         } else {
             tv_current_language.setText(getResources().getString(R.string.language_english));
@@ -67,9 +76,12 @@ public class SettingActivity extends BaseActivity {
         return versionName;
     }
 
-    @OnClick({R.id.iv_back, R.id.tv_serve_address, R.id.tv_current_language})
+    @OnClick({R.id.iv_net_back, R.id.iv_back, R.id.tv_serve_address, R.id.tv_current_language})
     void click(View view) {
         switch (view.getId()) {
+            case R.id.iv_net_back:
+                finish();
+                break;
             case R.id.iv_back:
                 EventBus.getDefault().post(new MessageEvent("SETTING_BACK"));
                 finish();

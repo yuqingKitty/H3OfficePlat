@@ -6,6 +6,11 @@
     android:background="@color/color_FBFBFB"
     android:orientation="vertical">
 
+    <include
+        android:id="@+id/ll_no_net"
+        layout="@layout/view_no_net"
+        android:visibility="gone" />
+
     <com.aotuo.h3officeplat.view.TitleView
         android:id="@+id/title_view"
         android:layout_width="match_parent"
@@ -18,12 +23,12 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_48"
         android:background="@color/color_FFFFFF"
+        android:ellipsize="end"
         android:gravity="center_vertical"
         android:paddingLeft="@dimen/dp_12"
-        android:textColor="@color/color_2C3038"
-        android:textSize="@dimen/sp_16"
         android:singleLine="true"
-        android:ellipsize="end"/>
+        android:textColor="@color/color_2C3038"
+        android:textSize="@dimen/sp_16" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -33,8 +38,8 @@
             android:id="@+id/tv_check_next"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_44"
-            android:background="@color/color_77BCFA"
             android:layout_alignParentBottom="true"
+            android:background="@color/color_77BCFA"
             android:gravity="center"
             android:text="@string/check"
             android:textColor="@color/color_FFFFFF"

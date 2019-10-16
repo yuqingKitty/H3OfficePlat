@@ -227,7 +227,7 @@ public class WebViewActivity extends BaseActivity {
             } else if (mUploadCallbackAboveL != null) {
                 chooseAbove(resultCode, data);
             } else {
-                Toast.makeText(this, "发生错误", Toast.LENGTH_SHORT).show();
+                showToast("发生错误");
             }
         }
     }

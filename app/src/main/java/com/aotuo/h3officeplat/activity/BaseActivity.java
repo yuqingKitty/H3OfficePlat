@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.Gravity;
 import android.widget.Toast;
 
 import com.aotuo.h3officeplat.utils.LanguageUtil;
@@ -59,7 +60,9 @@ public abstract class BaseActivity extends Activity {
     public void showToast(String str) {
         if (str == null || str.trim().length() < 1)
             return;
-        Toast.makeText(this, str, Toast.LENGTH_SHORT).show();
+        Toast toast = Toast.makeText(this, str, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
     }
 
     @Override

@@ -18,7 +18,6 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.aotuo.h3officeplat.R;
 import com.aotuo.h3officeplat.bean.MessageEvent;

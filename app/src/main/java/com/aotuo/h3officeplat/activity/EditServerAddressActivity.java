@@ -79,9 +79,6 @@ public class EditServerAddressActivity extends BaseActivity implements View.OnCl
                 if (TextUtils.isEmpty(serverAddress)) {
                     new CommonDialog(this, "", getResources().getString(R.string.server_address_is_empty), getResources().getString(R.string.know_it));
                 } else if (serverAddress.startsWith("http:") || serverAddress.startsWith("https:")) {
-                    Uri uri = Uri.parse(serverAddress);
-                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                    startActivity(intent);
                     SharedPreferencesHelper.getInstance().setAppData(SharedPreferencesHelper.KEY_APP_SERVER_ADDRESS, serverAddress);
                     finish();
                 } else {

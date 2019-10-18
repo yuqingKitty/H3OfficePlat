@@ -11,10 +11,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.aotuo.h3officeplat.R;
+import com.aotuo.h3officeplat.bean.MessageEvent;
 import com.aotuo.h3officeplat.utils.CommonTools;
 import com.aotuo.h3officeplat.utils.SharedPreferencesHelper;
 import com.aotuo.h3officeplat.view.CommonDialog;
 import com.aotuo.h3officeplat.view.TitleView;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 
@@ -79,6 +82,9 @@ public class EditServerAddressActivity extends BaseActivity implements View.OnCl
                 if (TextUtils.isEmpty(serverAddress)) {
                     new CommonDialog(this, "", getResources().getString(R.string.server_address_is_empty), getResources().getString(R.string.know_it));
                 } else if (serverAddress.startsWith("http:") || serverAddress.startsWith("https:")) {
+                    if (!serverAddress.equals(SharedPreferencesHelper.getInstance().getAppData(SharedPreferencesHelper.KEY_APP_SERVER_ADDRESS, ""))) {
+                        EventBus.getDefault().post(new MessageEvent("EDIT_URL_CHANGED"));
+                    }
                     SharedPreferencesHelper.getInstance().setAppData(SharedPreferencesHelper.KEY_APP_SERVER_ADDRESS, serverAddress);
                     finish();
                 } else {

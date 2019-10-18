@@ -60,6 +60,7 @@ public class WebViewActivity extends BaseActivity {
     private android.webkit.ValueCallback<Uri> mUploadCallbackBelow;
     private Uri imageUri;
     private int REQUEST_CODE = 1234;
+    private boolean isChangedUrl = false;
 
     @Override
     protected int getLayout() {
@@ -78,6 +79,16 @@ public class WebViewActivity extends BaseActivity {
         String loadUrl = SharedPreferencesHelper.getInstance().getAppData(SharedPreferencesHelper.KEY_APP_SERVER_ADDRESS, "");
         bridgeWebView.loadUrl(loadUrl);
         EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (isChangedUrl){
+            String loadUrl = SharedPreferencesHelper.getInstance().getAppData(SharedPreferencesHelper.KEY_APP_SERVER_ADDRESS, "");
+            bridgeWebView.loadUrl(loadUrl);
+            isChangedUrl = false;
+        }
     }
 
     private void initWebView() {
@@ -263,12 +274,16 @@ public class WebViewActivity extends BaseActivity {
 
     @Subscribe(threadMode = ThreadMode.POSTING)
     public void onEventMessage(MessageEvent messageEvent) {
-        // Register a JavaScript handler function so that Java can call(Android调用JS，Android发送数据)
-        bridgeWebView.callHandler("functionInJs", messageEvent.getMessage(), new CallBackFunction() {
-            @Override
-            public void onCallBack(String data) {
-            }
-        });
+        if (messageEvent.getMessage().equals("EDIT_URL_CHANGED")){
+            isChangedUrl = true;
+        } else {
+            // Register a JavaScript handler function so that Java can call(Android调用JS，Android发送数据)
+            bridgeWebView.callHandler("functionInJs", messageEvent.getMessage(), new CallBackFunction() {
+                @Override
+                public void onCallBack(String data) {
+                }
+            });
+        }
     }
 
     @Override

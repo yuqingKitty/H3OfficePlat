@@ -73,9 +73,8 @@ public class ServerAddressActivity extends BaseActivity implements View.OnClickL
                 if (TextUtils.isEmpty(serverAddress)) {
                     showToast(getString(R.string.server_address_is_empty));
                 } else if (serverAddress.startsWith("http:") || serverAddress.startsWith("https:")) {
-                    Uri uri = Uri.parse(serverAddress);
-                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                    startActivity(intent);
+                    SharedPreferencesHelper.getInstance().setAppData(SharedPreferencesHelper.KEY_APP_SERVER_ADDRESS, serverAddress);
+                    changeView(WebViewActivity.class);
                 } else {
                     showToast(getString(R.string.server_address_format_error));
                 }

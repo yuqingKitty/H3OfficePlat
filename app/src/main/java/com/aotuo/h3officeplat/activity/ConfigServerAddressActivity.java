@@ -63,14 +63,9 @@ public class ConfigServerAddressActivity extends BaseActivity implements View.On
                     SharedPreferencesHelper.getInstance().setAppData(SharedPreferencesHelper.KEY_APP_SERVER_ADDRESS, serverAddress);
                     switch (view.getId()) {
                         case R.id.tv_config_next:
-                            // 跳转H5
-                            changeView(WebViewActivity.class);
-                            break;
                         case R.id.tv_right_title:
                             // 检测
-                            Uri uri = Uri.parse(serverAddress);
-                            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                            startActivity(intent);
+                            changeView(WebViewActivity.class);
                             break;
                     }
                 } else {

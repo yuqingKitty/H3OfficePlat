@@ -6,6 +6,7 @@
     <string name="config_server_address">Server Address</string>
     <string name="check">Check</string>
     <string name="next">Next</string>
+    <string name="server_detection">Server Detection</string>
     <string name="please_config_server_address">Please configure the server address!</string>
     <string name="save_server_address_tip">It can be modified in settings after saving</string>
     <string name="input_server_address">Please fill in the server address</string>

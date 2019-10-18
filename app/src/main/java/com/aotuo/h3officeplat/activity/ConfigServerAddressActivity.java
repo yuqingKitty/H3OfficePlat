@@ -1,7 +1,6 @@
 package com.aotuo.h3officeplat.activity;
 
-import android.content.Intent;
-import android.net.Uri;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -63,9 +62,13 @@ public class ConfigServerAddressActivity extends BaseActivity implements View.On
                     SharedPreferencesHelper.getInstance().setAppData(SharedPreferencesHelper.KEY_APP_SERVER_ADDRESS, serverAddress);
                     switch (view.getId()) {
                         case R.id.tv_config_next:
+                            changeView(WebViewActivity.class);
+                            break;
                         case R.id.tv_right_title:
                             // 检测
-                            changeView(WebViewActivity.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putString("fromSource", "CHECK");
+                            changeView(WebViewActivity.class, bundle);
                             break;
                     }
                 } else {

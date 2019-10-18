@@ -25,6 +25,7 @@ import com.aotuo.h3officeplat.utils.CommonTools;
 import com.aotuo.h3officeplat.utils.LanguageUtil;
 import com.aotuo.h3officeplat.utils.SharedPreferencesHelper;
 import com.aotuo.h3officeplat.view.CommonDialog;
+import com.aotuo.h3officeplat.view.TitleView;
 import com.github.lzyzsd.jsbridge.BridgeHandler;
 import com.github.lzyzsd.jsbridge.BridgeWebView;
 import com.github.lzyzsd.jsbridge.CallBackFunction;
@@ -48,12 +49,14 @@ import static com.aotuo.h3officeplat.utils.SharedPreferencesHelper.KEY_APP_USE_L
 import static com.aotuo.h3officeplat.utils.SharedPreferencesHelper.KEY_APP_USE_LANGUAGE_ZH;
 
 public class WebViewActivity extends BaseActivity {
+    @BindView(R.id.ll_no_net)
+    LinearLayout ll_no_net;
+    @BindView(R.id.title_view)
+    TitleView title_view;
     @BindView(R.id.bridge_webview)
     BridgeWebView bridgeWebView;
     @BindView(R.id.iv_setting)
     ImageView iv_setting;
-    @BindView(R.id.ll_no_net)
-    LinearLayout ll_no_net;
 
     private Context mContext;
     private android.webkit.ValueCallback<Uri[]> mUploadCallbackAboveL;
@@ -73,6 +76,12 @@ public class WebViewActivity extends BaseActivity {
             ll_no_net.setVisibility(View.GONE);
         } else {
             ll_no_net.setVisibility(View.VISIBLE);
+            title_view.setVisibility(View.GONE);
+        }
+        if (getIntent() != null && getIntent().getExtras() != null){
+            title_view.setVisibility(View.VISIBLE);
+        } else {
+            title_view.setVisibility(View.GONE);
         }
         mContext = this;
         initWebView();
@@ -84,7 +93,7 @@ public class WebViewActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (isChangedUrl){
+        if (isChangedUrl) {
             String loadUrl = SharedPreferencesHelper.getInstance().getAppData(SharedPreferencesHelper.KEY_APP_SERVER_ADDRESS, "");
             bridgeWebView.loadUrl(loadUrl);
             isChangedUrl = false;
@@ -215,7 +224,7 @@ public class WebViewActivity extends BaseActivity {
 
         Intent Photo = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         Intent chooserIntent = Intent.createChooser(Photo, "");
-        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Parcelable[]{captureIntent,fileIntent});
+        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Parcelable[]{captureIntent, fileIntent});
         startActivityForResult(chooserIntent, REQUEST_CODE);
     }
 
@@ -247,10 +256,11 @@ public class WebViewActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.iv_net_back, R.id.iv_setting})
+    @OnClick({R.id.iv_net_back, R.id.iv_back, R.id.iv_setting})
     void click(View view) {
         switch (view.getId()) {
             case R.id.iv_net_back:
+            case R.id.iv_back:
                 finish();
                 break;
             case R.id.iv_setting:
@@ -274,7 +284,7 @@ public class WebViewActivity extends BaseActivity {
 
     @Subscribe(threadMode = ThreadMode.POSTING)
     public void onEventMessage(MessageEvent messageEvent) {
-        if (messageEvent.getMessage().equals("EDIT_URL_CHANGED")){
+        if (messageEvent.getMessage().equals("EDIT_URL_CHANGED")) {
             isChangedUrl = true;
         } else {
             // Register a JavaScript handler function so that Java can call(Android调用JS，Android发送数据)

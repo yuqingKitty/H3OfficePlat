@@ -1,7 +1,6 @@
 package com.aotuo.h3officeplat.activity;
 
-import android.content.Intent;
-import android.net.Uri;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -74,7 +73,9 @@ public class ServerAddressActivity extends BaseActivity implements View.OnClickL
                     showToast(getString(R.string.server_address_is_empty));
                 } else if (serverAddress.startsWith("http:") || serverAddress.startsWith("https:")) {
                     SharedPreferencesHelper.getInstance().setAppData(SharedPreferencesHelper.KEY_APP_SERVER_ADDRESS, serverAddress);
-                    changeView(WebViewActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("fromSource", "CHECK");
+                    changeView(WebViewActivity.class, bundle);
                 } else {
                     showToast(getString(R.string.server_address_format_error));
                 }

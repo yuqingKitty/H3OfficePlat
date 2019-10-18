@@ -1,27 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_FFFFFF"
     android:orientation="vertical">
 
-    <com.github.lzyzsd.jsbridge.BridgeWebView
-        android:id="@+id/bridge_webview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </com.github.lzyzsd.jsbridge.BridgeWebView>
-
-    <ImageView
-        android:id="@+id/iv_setting"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/icon_setting"
-        android:layout_gravity="right"
-        android:padding="@dimen/dp_20"/>
-
     <include
         android:id="@+id/ll_no_net"
         layout="@layout/view_no_net"
+        android:visibility="gone" />
+
+    <com.aotuo.h3officeplat.view.TitleView
+        android:id="@+id/title_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:centerTitle="@string/server_detection"
         android:visibility="gone"/>
 
-</FrameLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.github.lzyzsd.jsbridge.BridgeWebView
+            android:id="@+id/bridge_webview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <ImageView
+            android:id="@+id/iv_setting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:padding="@dimen/dp_20"
+            android:src="@drawable/icon_setting" />
+    </FrameLayout>
+
+
+</LinearLayout>

@@ -8,6 +8,7 @@ android {
         targetSdkVersion 29
         versionCode 1
         versionName "1.0.0"
+        flavorDimensions ""
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         ndk {
@@ -68,6 +69,18 @@ android {
             signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+
+    applicationVariants.all { variant->
+        variant.outputs.all { output->
+            def buildName = variant.buildType.name.equalsIgnoreCase("debug")?"_debug":variant.buildType.name.equalsIgnoreCase("preview")?"_${version_build}":""
+            def fileName = "${variant.productFlavors[0].name}_v${variant.versionName}${buildName}.apk"
+            outputFileName = fileName
+        }
+    }
+
+    productFlavors {
+        "h3office" {} //官网
     }
 }
 

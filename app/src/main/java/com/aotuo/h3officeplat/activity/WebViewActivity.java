@@ -12,6 +12,7 @@ import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.text.format.DateFormat;
 import android.view.View;
+import android.webkit.DownloadListener;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -114,6 +115,7 @@ public class WebViewActivity extends BaseActivity {
         bridgeWebView.getSettings().setDatabaseEnabled(true);   // 应用可以有数据库
         bridgeWebView.getSettings().setAppCacheEnabled(true);   // 应用可以有缓存
         bridgeWebView.setDefaultHandler(new DefaultHandler());
+        bridgeWebView.setDownloadListener(new MyDownLoadListener(this));  // 下载响应
         // Register a Java handler function so that js can call(JS调用Android，Android接收数据)
         bridgeWebView.registerHandler("submitFromWeb", new BridgeHandler() {
             @Override
@@ -364,6 +366,21 @@ public class WebViewActivity extends BaseActivity {
         Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
         intent.setData(imageUri);
         sendBroadcast(intent);
+    }
+
+    class MyDownLoadListener implements DownloadListener {
+        private Context context;
+
+        public MyDownLoadListener(Context context) {
+            this.context = context;
+        }
+
+        @Override
+        public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimetype, long contentLength) {
+            Uri uri = Uri.parse(url);
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            context.startActivity(intent);
+        }
     }
 
 }

@@ -181,8 +181,7 @@ public class WebViewActivity extends BaseActivity {
              * // For Android >= 3.0
              */
             public void openFileChooser(ValueCallback<Uri> uploadMsg, String acceptType) {
-                // 这里我们就不区分input的参数了，直接用拍照
-                mUploadCallbackBelow = uploadMsg;
+                // 这里我们就不区分input的参数了，直接用拍照                mUploadCallbackBelow = uploadMsg;
                 showFileChooser();
             }
 

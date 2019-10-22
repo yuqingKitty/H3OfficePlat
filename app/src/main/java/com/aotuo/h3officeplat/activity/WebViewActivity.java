@@ -109,11 +109,11 @@ public class WebViewActivity extends BaseActivity {
         bridgeWebView.getSettings().setJavaScriptEnabled(true);
         bridgeWebView.getSettings().setUserAgentString(bridgeWebView.getSettings().getUserAgentString() + " " + "h3officeplat");
         bridgeWebView.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
-        bridgeWebView.getSettings().setDomStorageEnabled(true);  // 设置可以使用localStorage
-        bridgeWebView.getSettings().setLoadsImagesAutomatically(true);
-        bridgeWebView.getSettings().setBlockNetworkImage(false);
-        bridgeWebView.getSettings().setDatabaseEnabled(true);   // 应用可以有数据库
-        bridgeWebView.getSettings().setAppCacheEnabled(true);   // 应用可以有缓存
+//        bridgeWebView.getSettings().setDomStorageEnabled(true);  // 设置可以使用localStorage
+//        bridgeWebView.getSettings().setLoadsImagesAutomatically(true);
+//        bridgeWebView.getSettings().setBlockNetworkImage(false);
+//        bridgeWebView.getSettings().setDatabaseEnabled(true);   // 应用可以有数据库
+//        bridgeWebView.getSettings().setAppCacheEnabled(true);   // 应用可以有缓存
         bridgeWebView.setDefaultHandler(new DefaultHandler());
         bridgeWebView.setDownloadListener(new MyDownLoadListener(this));  // 下载响应
         // Register a Java handler function so that js can call(JS调用Android，Android接收数据)

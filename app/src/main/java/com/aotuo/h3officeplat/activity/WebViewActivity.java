@@ -79,7 +79,7 @@ public class WebViewActivity extends BaseActivity {
             ll_no_net.setVisibility(View.VISIBLE);
             title_view.setVisibility(View.GONE);
         }
-        if (getIntent() != null && getIntent().getExtras() != null){
+        if (getIntent() != null && getIntent().getExtras() != null) {
             title_view.setVisibility(View.VISIBLE);
         } else {
             title_view.setVisibility(View.GONE);
@@ -109,11 +109,11 @@ public class WebViewActivity extends BaseActivity {
         bridgeWebView.getSettings().setJavaScriptEnabled(true);
         bridgeWebView.getSettings().setUserAgentString(bridgeWebView.getSettings().getUserAgentString() + " " + "h3officeplat");
         bridgeWebView.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
-//        bridgeWebView.getSettings().setDomStorageEnabled(true);  // 设置可以使用localStorage
-//        bridgeWebView.getSettings().setLoadsImagesAutomatically(true);
-//        bridgeWebView.getSettings().setBlockNetworkImage(false);
-//        bridgeWebView.getSettings().setDatabaseEnabled(true);   // 应用可以有数据库
-//        bridgeWebView.getSettings().setAppCacheEnabled(true);   // 应用可以有缓存
+        bridgeWebView.getSettings().setDomStorageEnabled(true);  // 设置可以使用localStorage
+        bridgeWebView.getSettings().setLoadsImagesAutomatically(true);
+        bridgeWebView.getSettings().setBlockNetworkImage(false);
+        bridgeWebView.getSettings().setDatabaseEnabled(true);   // 应用可以有数据库
+        bridgeWebView.getSettings().setAppCacheEnabled(true);   // 应用可以有缓存
         bridgeWebView.setDefaultHandler(new DefaultHandler());
         bridgeWebView.setDownloadListener(new MyDownLoadListener(this));  // 下载响应
         // Register a Java handler function so that js can call(JS调用Android，Android接收数据)
@@ -181,7 +181,8 @@ public class WebViewActivity extends BaseActivity {
              * // For Android >= 3.0
              */
             public void openFileChooser(ValueCallback<Uri> uploadMsg, String acceptType) {
-                // 这里我们就不区分input的参数了，直接用拍照                mUploadCallbackBelow = uploadMsg;
+                // 这里我们就不区分input的参数了，直接用拍照
+                mUploadCallbackBelow = uploadMsg;
                 showFileChooser();
             }
 

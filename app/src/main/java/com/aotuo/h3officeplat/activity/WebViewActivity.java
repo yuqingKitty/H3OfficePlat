@@ -150,6 +150,10 @@ public class WebViewActivity extends BaseActivity {
                             SharedPreferencesHelper.getInstance().setAppData(KEY_APP_USE_LANGUAGE, KEY_APP_USE_LANGUAGE_EN);
                             changeLanguage();
                             break;
+                        case "QR_SCAN":
+                            // 扫一扫
+                            
+                            break;
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -298,12 +302,6 @@ public class WebViewActivity extends BaseActivity {
         }
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(this);
-    }
-
     /**
      * Android API < 21(Android 5.0)版本的回调处理
      *
@@ -381,6 +379,12 @@ public class WebViewActivity extends BaseActivity {
             Intent intent = new Intent(Intent.ACTION_VIEW, uri);
             context.startActivity(intent);
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
 }

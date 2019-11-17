@@ -31,7 +31,7 @@ import com.github.lzyzsd.jsbridge.BridgeHandler;
 import com.github.lzyzsd.jsbridge.BridgeWebView;
 import com.github.lzyzsd.jsbridge.CallBackFunction;
 import com.github.lzyzsd.jsbridge.DefaultHandler;
-
+import com.google.zxing.client.android.CaptureActivity;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -50,6 +50,9 @@ import static com.aotuo.h3officeplat.utils.SharedPreferencesHelper.KEY_APP_USE_L
 import static com.aotuo.h3officeplat.utils.SharedPreferencesHelper.KEY_APP_USE_LANGUAGE_ZH;
 
 public class WebViewActivity extends BaseActivity {
+    private final static int REQUEST_CODE_SCAN = 1;
+    private final static int REQUEST_CODE = 1234;
+
     @BindView(R.id.ll_no_net)
     LinearLayout ll_no_net;
     @BindView(R.id.title_view)
@@ -63,7 +66,6 @@ public class WebViewActivity extends BaseActivity {
     private android.webkit.ValueCallback<Uri[]> mUploadCallbackAboveL;
     private android.webkit.ValueCallback<Uri> mUploadCallbackBelow;
     private Uri imageUri;
-    private int REQUEST_CODE = 1234;
     private boolean isChangedUrl = false;
 
     @Override
@@ -152,7 +154,7 @@ public class WebViewActivity extends BaseActivity {
                             break;
                         case "QR_SCAN":
                             // 扫一扫
-                            
+
                             break;
                     }
                 } catch (Exception e) {
@@ -246,6 +248,11 @@ public class WebViewActivity extends BaseActivity {
             } else {
                 showToast("发生错误");
             }
+//        } else if (requestCode == REQUEST_CODE_SCAN && resultCode == RESULT_OK){
+//            if (data != null) {
+//                //返回的文本内容
+//                String content = data.getStringExtra(CaptureActivity.);
+//            }
         }
     }
 
@@ -270,7 +277,9 @@ public class WebViewActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.iv_setting:
-                changeView(SettingActivity.class);
+//                changeView(SettingActivity.class);
+                Intent intent=new Intent(WebViewActivity.this, CaptureActivity.class);
+                startActivityForResult(intent,REQUEST_CODE_SCAN);
                 break;
         }
     }

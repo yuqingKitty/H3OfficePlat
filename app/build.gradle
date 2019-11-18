@@ -94,7 +94,9 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     implementation 'com.github.lzyzsd:jsbridge:1.0.4'
     implementation 'org.greenrobot:eventbus:3.1.1'
-    implementation 'cn.jiguang.sdk:jpush:3.3.4'   // 此处以JPush 3.3.4 版本为例。
-    implementation 'cn.jiguang.sdk:jcore:2.1.2'   // 此处以JCore 2.1.2 版本为例。
-
+    implementation 'cn.jiguang.sdk:jpush:3.3.4'
+    // 此处以JPush 3.3.4 版本为例。
+    implementation 'cn.jiguang.sdk:jcore:2.1.2'
+    // 此处以JCore 2.1.2 版本为例。
+    implementation project(':zxinglib')
 }

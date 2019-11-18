@@ -31,7 +31,7 @@ import com.github.lzyzsd.jsbridge.BridgeHandler;
 import com.github.lzyzsd.jsbridge.BridgeWebView;
 import com.github.lzyzsd.jsbridge.CallBackFunction;
 import com.github.lzyzsd.jsbridge.DefaultHandler;
-import com.google.zxing.client.android.CaptureActivity;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -140,7 +140,8 @@ public class WebViewActivity extends BaseActivity {
                                 int storePermission = checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
                                 int cameraPermission = checkSelfPermission(Manifest.permission.CAMERA);
                                 if (storePermission != PackageManager.PERMISSION_GRANTED || cameraPermission != PackageManager.PERMISSION_GRANTED) {
-                                    new CommonDialog(mContext, getResources().getString(R.string.access_request), getResources().getString(R.string.grant_camera_permission), getResources().getString(R.string.confirm));
+                                    new CommonDialog(mContext, getResources().getString(R.string.access_request),
+                                            getResources().getString(R.string.grant_camera_permission), getResources().getString(R.string.confirm));
                                 }
                             }
                             break;
@@ -154,6 +155,15 @@ public class WebViewActivity extends BaseActivity {
                             break;
                         case "QR_SCAN":
                             // 扫一扫
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                int storePermission = checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                                int cameraPermission = checkSelfPermission(Manifest.permission.CAMERA);
+                                if (storePermission != PackageManager.PERMISSION_GRANTED || cameraPermission != PackageManager.PERMISSION_GRANTED) {
+                                    new CommonDialog(mContext, getResources().getString(R.string.access_request),
+                                            getResources().getString(R.string.grant_camera_permission), getResources().getString(R.string.confirm));
+                                    return;
+                                }
+                            }
 
                             break;
                     }
@@ -248,11 +258,12 @@ public class WebViewActivity extends BaseActivity {
             } else {
                 showToast("发生错误");
             }
-//        } else if (requestCode == REQUEST_CODE_SCAN && resultCode == RESULT_OK){
-//            if (data != null) {
-//                //返回的文本内容
-//                String content = data.getStringExtra(CaptureActivity.);
-//            }
+        } else if (requestCode == REQUEST_CODE_SCAN && resultCode == RESULT_OK){
+            if (data != null) {
+                //返回的文本内容
+                String content = data.getStringExtra("ResultQRCode");
+                showToast(content);
+            }
         }
     }
 
@@ -277,9 +288,7 @@ public class WebViewActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.iv_setting:
-//                changeView(SettingActivity.class);
-                Intent intent=new Intent(WebViewActivity.this, CaptureActivity.class);
-                startActivityForResult(intent,REQUEST_CODE_SCAN);
+                changeView(SettingActivity.class);
                 break;
         }
     }

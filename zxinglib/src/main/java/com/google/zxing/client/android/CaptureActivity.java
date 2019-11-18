@@ -351,12 +351,12 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     return super.onKeyDown(keyCode, event);
   }
 
-  @Override
-  public boolean onCreateOptionsMenu(Menu menu) {
-    MenuInflater menuInflater = getMenuInflater();
-    menuInflater.inflate(R.menu.capture, menu);
-    return super.onCreateOptionsMenu(menu);
-  }
+//  @Override
+//  public boolean onCreateOptionsMenu(Menu menu) {
+//    MenuInflater menuInflater = getMenuInflater();
+//    menuInflater.inflate(R.menu.capture, menu);
+//    return super.onCreateOptionsMenu(menu);
+//  }
 
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {

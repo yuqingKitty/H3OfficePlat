@@ -31,6 +31,7 @@ import com.github.lzyzsd.jsbridge.BridgeHandler;
 import com.github.lzyzsd.jsbridge.BridgeWebView;
 import com.github.lzyzsd.jsbridge.CallBackFunction;
 import com.github.lzyzsd.jsbridge.DefaultHandler;
+import com.google.zxing.client.android.CaptureActivity;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -288,7 +289,9 @@ public class WebViewActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.iv_setting:
-                changeView(SettingActivity.class);
+//                changeView(SettingActivity.class);
+                Intent intent = new Intent(this, CaptureActivity.class);
+                startActivityForResult(intent, 1);
                 break;
         }
     }

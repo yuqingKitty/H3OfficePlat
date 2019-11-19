@@ -79,7 +79,7 @@ import java.util.Map;
  * @author Sean Owen
  */
 public final class CaptureActivity extends Activity implements SurfaceHolder.Callback {
-
+    public static final String ResultDataKey = "RESULT";
   private static final String TAG = CaptureActivity.class.getSimpleName();
 
   private static final long DEFAULT_INTENT_RESULT_DURATION_MS = 1500L;
@@ -531,6 +531,14 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
       return;
     }
 
+      Intent intent = new Intent();
+      Bundle bd = new Bundle();
+      bd.putString(ResultDataKey, resultHandler.getDisplayContents().toString());
+      intent.putExtras(bd);
+      setResult(RESULT_OK, intent);
+      finish();
+
+      /**
     statusView.setVisibility(View.GONE);
     viewfinderView.setVisibility(View.GONE);
     resultView.setVisibility(View.VISIBLE);
@@ -604,7 +612,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
         button.setVisibility(View.GONE);
       }
     }
-
+*/
   }
 
   // Briefly show the contents of the barcode, then handle the result outside Barcode Scanner.

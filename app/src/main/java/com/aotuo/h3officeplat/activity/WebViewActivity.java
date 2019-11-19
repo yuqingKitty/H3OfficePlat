@@ -165,7 +165,8 @@ public class WebViewActivity extends BaseActivity {
                                     return;
                                 }
                             }
-
+                            Intent intent = new Intent(WebViewActivity.this, CaptureActivity.class);
+                            startActivityForResult(intent, REQUEST_CODE_SCAN);
                             break;
                     }
                 } catch (Exception e) {
@@ -262,8 +263,14 @@ public class WebViewActivity extends BaseActivity {
         } else if (requestCode == REQUEST_CODE_SCAN && resultCode == RESULT_OK){
             if (data != null) {
                 //返回的文本内容
-                String content = data.getStringExtra("ResultQRCode");
+                String content = data.getStringExtra(CaptureActivity.ResultDataKey);
                 showToast(content);
+                // Register a JavaScript handler function so that Java can call(Android调用JS，Android发送数据)
+                bridgeWebView.callHandler("androidScanResult", content, new CallBackFunction() {
+                    @Override
+                    public void onCallBack(String data) {
+                    }
+                });
             }
         }
     }
@@ -289,9 +296,7 @@ public class WebViewActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.iv_setting:
-//                changeView(SettingActivity.class);
-                Intent intent = new Intent(this, CaptureActivity.class);
-                startActivityForResult(intent, 1);
+                changeView(SettingActivity.class);
                 break;
         }
     }

@@ -278,8 +278,6 @@ public class WebViewActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         if (bridgeWebView != null && bridgeWebView.canGoBack()) {
-            // 防止重定位，无法正确返回，goBack两次
-            bridgeWebView.goBack();
             bridgeWebView.goBack();
         } else {
             super.onBackPressed();

@@ -25,7 +25,9 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.Rect;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -84,7 +86,7 @@ public final class ViewfinderView extends View {
       return; // not ready yet, early draw before done configuring
     }
     Rect frame = cameraManager.getFramingRect();
-    Rect previewFrame = cameraManager.getFramingRectInPreview();    
+    Rect previewFrame = cameraManager.getFramingRectInPreview();
     if (frame == null || previewFrame == null) {
       return;
     }
@@ -92,25 +94,59 @@ public final class ViewfinderView extends View {
     int height = canvas.getHeight();
 
     // Draw the exterior (i.e. outside the framing rect) darkened
+    // 绘制聚焦框外的暗色透明层
     paint.setColor(resultBitmap != null ? resultColor : maskColor);
     canvas.drawRect(0, 0, width, frame.top, paint);
     canvas.drawRect(0, frame.top, frame.left, frame.bottom + 1, paint);
     canvas.drawRect(frame.right + 1, frame.top, width, frame.bottom + 1, paint);
     canvas.drawRect(0, frame.bottom + 1, width, height, paint);
 
+    //绘制扫码框4个边角弧形
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+      //左上角
+      Path ltPath1 = new Path();
+      Path ltPath2 = new Path();
+      ltPath1.addRect(frame.left, frame.top, frame.left + 20, frame.top + 20, Path.Direction.CCW);
+      ltPath2.addCircle(frame.left + 20, frame.top + 20, 20, Path.Direction.CCW);
+      ltPath1.op(ltPath2, Path.Op.DIFFERENCE);
+      canvas.drawPath(ltPath1, paint);
+      //右上角
+      Path rtPath1 = new Path();
+      Path rtPath2 = new Path();
+      rtPath1.addRect(frame.right - 20, frame.top, frame.right + 1, frame.top + 20, Path.Direction.CCW);
+      rtPath2.addCircle(frame.right - 20, frame.top + 20, 20, Path.Direction.CCW);
+      rtPath1.op(rtPath2, Path.Op.DIFFERENCE);
+      canvas.drawPath(rtPath1, paint);
+      //左下角
+      Path lbPath1 = new Path();
+      Path lbPath2 = new Path();
+      lbPath1.addRect(frame.left, frame.bottom - 20, frame.left + 20, frame.bottom + 1, Path.Direction.CCW);
+      lbPath2.addCircle(frame.left + 20, frame.bottom - 20, 20, Path.Direction.CCW);
+      lbPath1.op(lbPath2, Path.Op.DIFFERENCE);
+      canvas.drawPath(lbPath1, paint);
+      //右下角
+      Path rbPath1 = new Path();
+      Path rbPath2 = new Path();
+      rbPath1.addRect(frame.right - 20, frame.bottom - 20, frame.right + 1, frame.bottom + 1, Path.Direction.CCW);
+      rbPath2.addCircle(frame.right - 20, frame.bottom - 20, 20, Path.Direction.CCW);
+      rbPath1.op(rbPath2, Path.Op.DIFFERENCE);
+      canvas.drawPath(rbPath1, paint);
+    }
+
     if (resultBitmap != null) {
       // Draw the opaque result bitmap over the scanning rectangle
+      // 如果扫描结果不为空，则把扫描的结果填充到聚焦框中
       paint.setAlpha(CURRENT_POINT_OPACITY);
       canvas.drawBitmap(resultBitmap, null, frame, paint);
     } else {
-
+      // 画一根红色的激光线表示二维码解码正在进行
       // Draw a red "laser scanner" line through the middle to show decoding is active
       paint.setColor(laserColor);
       paint.setAlpha(SCANNER_ALPHA[scannerAlpha]);
       scannerAlpha = (scannerAlpha + 1) % SCANNER_ALPHA.length;
       int middle = frame.height() / 2 + frame.top;
       canvas.drawRect(frame.left + 2, middle - 1, frame.right - 1, middle + 2, paint);
-      
+
       float scaleX = frame.width() / (float) previewFrame.width();
       float scaleY = frame.height() / (float) previewFrame.height();
 
@@ -118,6 +154,7 @@ public final class ViewfinderView extends View {
       List<ResultPoint> currentLast = lastPossibleResultPoints;
       int frameLeft = frame.left;
       int frameTop = frame.top;
+      // 绘制解析过程中可能扫描到的关键点，使用黄色小圆点表示
       if (currentPossible.isEmpty()) {
         lastPossibleResultPoints = null;
       } else {
@@ -148,6 +185,7 @@ public final class ViewfinderView extends View {
 
       // Request another update at the animation interval, but only repaint the laser line,
       // not the entire viewfinder mask.
+      // 重绘聚焦框里的内容，不需要重绘整个界面。
       postInvalidateDelayed(ANIMATION_DELAY,
                             frame.left - POINT_SIZE,
                             frame.top - POINT_SIZE,

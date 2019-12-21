@@ -31,7 +31,6 @@ import com.github.lzyzsd.jsbridge.BridgeHandler;
 import com.github.lzyzsd.jsbridge.BridgeWebView;
 import com.github.lzyzsd.jsbridge.CallBackFunction;
 import com.github.lzyzsd.jsbridge.DefaultHandler;
-import com.google.zxing.client.android.CaptureActivity;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -165,7 +164,7 @@ public class WebViewActivity extends BaseActivity {
                                     return;
                                 }
                             }
-                            Intent intent = new Intent(WebViewActivity.this, CaptureActivity.class);
+                            Intent intent = new Intent(WebViewActivity.this, ScanCodeActivity.class);
                             startActivityForResult(intent, REQUEST_CODE_SCAN);
                             break;
                     }
@@ -263,7 +262,7 @@ public class WebViewActivity extends BaseActivity {
         } else if (requestCode == REQUEST_CODE_SCAN && resultCode == RESULT_OK){
             if (data != null) {
                 //返回的文本内容
-                String content = data.getStringExtra(CaptureActivity.ResultDataKey);
+                String content = data.getStringExtra(ScanCodeActivity.ResultDataKey);
                 // Register a JavaScript handler function so that Java can call(Android调用JS，Android发送数据)
                 bridgeWebView.callHandler("androidScanResult", content, new CallBackFunction() {
                     @Override

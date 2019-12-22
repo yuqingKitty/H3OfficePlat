@@ -30,5 +30,6 @@
     <string name="grant_camera_permission">请在"设置"-"应用"-"H3 BPM"-"权限"中开启相机及存储权限，以便正常使用H3 BPM的功能。</string>
     <string name="confirm">确定</string>
 
+    <string name="scan_code_tip">将二维码/条码放入框内，即可自动扫描</string>
     <string name="fail_open_camera">打开相机失败</string>
 </resources>

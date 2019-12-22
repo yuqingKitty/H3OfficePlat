@@ -29,5 +29,7 @@
     <string name="access_request">Access Request</string>
     <string name="grant_camera_permission">Please enable camera and storage permissions in "Settings - Application - H3 BPM - Permissions" in order to use the H3 BPM function normally.</string>
     <string name="confirm">OK</string>
+
+    <string name="scan_code_tip">Put the QR code / bar code into the box and it will scan automatically</string>
     <string name="fail_open_camera">Failed to open camera</string>
 </resources>

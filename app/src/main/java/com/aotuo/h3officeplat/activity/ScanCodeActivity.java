@@ -1,7 +1,6 @@
 package com.aotuo.h3officeplat.activity;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.os.Vibrator;
 
 import com.aotuo.h3officeplat.R;

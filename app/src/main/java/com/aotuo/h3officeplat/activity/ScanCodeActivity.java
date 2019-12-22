@@ -56,7 +56,7 @@ public class ScanCodeActivity extends BaseActivity implements QRCodeView.Delegat
      */
     @Override
     public void onScanQRCodeSuccess(String result) {
-        vibrate();
+//        vibrate();
         mZXingView.startSpot(); // 开始识别
         Intent intent = new Intent();
         intent.putExtra(ResultDataKey, result);
